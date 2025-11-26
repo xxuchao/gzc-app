@@ -62,7 +62,7 @@ gzc_app/                          # 项目根目录
 │   │       └── presentation/     # 表现层（UI + ViewModel/Controller）
 │   │           ├── pages/        # 页面（LoginPage, RegisterPage）
 │   │           ├── widgets/      # 页面内专属组件
-│   │           └── bloc/         # 或 cubit / provider / controller
+│   │           └── controllers/         # 或 cubit / provider / controller
 │   │
 │   ├── injection.config.dart     # （可选）依赖注入配置（get_it + injectable）
 │   └── injection.dart            # 依赖注入容器初始化
