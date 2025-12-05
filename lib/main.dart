@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:gzc_app/core/utils/devices.dart';
+import 'core/theme/app_theme.dart';
+import 'core/widgets/main_view.dart';
+import 'injection.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies(); // 初始化 DI
   runApp(const MainApp());
 }
 
@@ -9,12 +17,19 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    DeviceUtils.init(context);
+    return ScreenUtilInit(
+      designSize: const Size(390, 844), // const Size(375, 812)
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return GetMaterialApp(
+          title: '云尚公证处',
+          theme: appLightTheme,
+          debugShowCheckedModeBanner: true,
+          home: const MainView(),
+        );
+      },
     );
   }
 }

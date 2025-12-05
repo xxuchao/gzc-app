@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
-  static const primary = Color(0xFF1A73E8);
-  static const secondary = Color(0xFF34A853);
-  static const background = Color(0xFFF8F9FA);
-  static const surface = Colors.white;
-  static const error = Color(0xFFEA4335);
-  static const onPrimary = Colors.white;
-  static const onBackground = Color(0xFF202124);
-}
+// 主色
+const Color primaryColor = Color(0xFF002EA6);
+
+// 文字颜色
+const Color textColor = Color(0xFF333333);
+const Color secondaryTextColor = Color(0xFF9095A0);
+
+// 背景颜色
+const Color backgroundColor = Color(0xFFF3F4F6);
+
+const Color surfaceColor = Color(0xFFFFFFFF);
+
+const Color secondaryColor = Color(0xFF950009);
+
+const Color actionColor = Color(0xFF379AE6);
+
+const Color tagWarningColor = Color(0xFFEFB034);
+const Color tagSuccessColor = Color(0xFF67C23A);
+const Color tagDangerColor = Color(0xFFFF0000);
+
+const Color switchThumbSuccessColor = Color(0xFFCCE9C0);

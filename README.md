@@ -17,7 +17,22 @@
   - Visual Studio 2019 16.11.49
   - Android Studio 2025.1.1
   - Java 21.0.8
-  
+
+## 依赖
+dependencies:
+  flutter: 
+    sdk: flutter
+  get: ^4.7.3 状态管理
+  dio: ^5.9.0 网络请求
+  pretty_dio_logger: ^1.4.0 网络请求日志美化
+  path_provider: ^2.1.5 文件存储
+  shimmer: ^3.0.0 加载微光效果
+  flutter_screenutil: ^5.9.3 屏幕适配
+  carousel_slider: ^5.1.1 轮播图
+  shared_preferences: ^2.5.3 本地存储
+  flutter_secure_storage: ^9.2.4 安全存储
+  get_it: ^9.1.1 依赖注入
+  injectable: ^2.7.0 依赖注入注解
 
 ## 环境配置
 flutter doctor
@@ -83,3 +98,6 @@ gzc_app/                          # 项目根目录
 ├── pubspec.yaml                  # 依赖管理
 ├── analysis_options.yaml         # 代码规范（lints）
 └── README.md
+
+## 注解代码
+- 需要运行 `flutter pub run build_runner build` or `dart run build_runner build` 生成依赖注入代码
