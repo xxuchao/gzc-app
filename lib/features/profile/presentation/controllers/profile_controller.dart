@@ -1,31 +1,56 @@
-import 'package:get/get.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/network/net_client.dart';
 
-class ProfileController extends GetxController {
-  // 网络请求工具
-  final NetClient _dioClient = Get.find<NetClient>();
-  
-  // 状态管理
-  final isLoading = false.obs;
-  final errorMessage = ''.obs;
-  final userProfile = {}.obs;
-  
-  @override
-  void onInit() {
-    super.onInit();
-    fetchProfile();
+class ProfileState {
+  final bool isLoading;
+  final String errorMessage;
+  final Map<String, dynamic> userProfile;
+
+  const ProfileState({
+    required this.isLoading,
+    required this.errorMessage,
+    required this.userProfile,
+  });
+
+  factory ProfileState.initial() => const ProfileState(
+        isLoading: false,
+        errorMessage: '',
+        userProfile: {},
+      );
+
+  ProfileState copyWith({
+    bool? isLoading,
+    String? errorMessage,
+    Map<String, dynamic>? userProfile,
+  }) {
+    return ProfileState(
+      isLoading: isLoading ?? this.isLoading,
+      errorMessage: errorMessage ?? this.errorMessage,
+      userProfile: userProfile ?? this.userProfile,
+    );
   }
-  
+}
+
+final profileProvider = NotifierProvider<ProfileNotifier, ProfileState>(
+  ProfileNotifier.new,
+);
+
+class ProfileNotifier extends Notifier<ProfileState> {
+  final NetClient _dioClient = NetClient();
+
+  @override
+  ProfileState build() {
+    fetchProfile();
+    return ProfileState.initial();
+  }
+
   Future<void> fetchProfile() async {
     try {
-      isLoading.value = true;
-      errorMessage.value = '';
-      
-      // 模拟网络请求延迟
+      state = state.copyWith(isLoading: true, errorMessage: '');
+
       await Future.delayed(const Duration(seconds: 1));
-      
-      // 假设这是从API获取的数据
-      final profileData = {
+
+      const profileData = {
         'id': '1',
         'name': '张三',
         'email': 'zhangsan@example.com',
@@ -34,32 +59,29 @@ class ProfileController extends GetxController {
         'department': '技术部',
         'position': '高级工程师',
       };
-      
-      userProfile.assignAll(profileData);
+
+      state = state.copyWith(userProfile: profileData);
     } catch (e) {
-      errorMessage.value = '获取个人信息失败: ${e.toString()}';
+      state = state.copyWith(errorMessage: '获取个人信息失败: ${e.toString()}');
     } finally {
-      isLoading.value = false;
+      state = state.copyWith(isLoading: false);
     }
   }
-  
+
   Future<void> updateProfile(Map<String, dynamic> updateData) async {
     try {
-      isLoading.value = true;
-      errorMessage.value = '';
-      
-      // 模拟网络请求延迟
+      state = state.copyWith(isLoading: true, errorMessage: '');
+
       await Future.delayed(const Duration(seconds: 1));
-      
-      // 更新本地数据
-      userProfile.assignAll(Map.from(userProfile) 
-        ..addAll(updateData));
-      
-      errorMessage.value = '更新成功';
+
+      state = state.copyWith(
+        userProfile: Map<String, dynamic>.from(state.userProfile)..addAll(updateData),
+        errorMessage: '更新成功',
+      );
     } catch (e) {
-      errorMessage.value = '更新个人信息失败: ${e.toString()}';
+      state = state.copyWith(errorMessage: '更新个人信息失败: ${e.toString()}');
     } finally {
-      isLoading.value = false;
+      state = state.copyWith(isLoading: false);
     }
   }
 }

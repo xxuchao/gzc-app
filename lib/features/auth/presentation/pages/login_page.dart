@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,7 +9,7 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Text(
           '🎉 登录',
-          style: Get.textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
     );

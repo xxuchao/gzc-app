@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -11,7 +10,7 @@ class ProfilePage extends StatelessWidget {
       body: Center(
         child: Text(
           '我的',
-          style: Get.textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
     );

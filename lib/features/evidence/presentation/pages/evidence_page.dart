@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class EvidencePage extends StatelessWidget {
   const EvidencePage({super.key});
@@ -11,7 +10,7 @@ class EvidencePage extends StatelessWidget {
       body: Center(
         child: Text(
           '证据',
-          style: Get.textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
     );

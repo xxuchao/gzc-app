@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CasePage extends StatelessWidget {
   const CasePage({super.key});
@@ -11,7 +10,7 @@ class CasePage extends StatelessWidget {
       body: Center(
         child: Text(
           '案件',
-          style: Get.textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
     );

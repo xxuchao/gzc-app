@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ApplicantPage extends StatelessWidget {
   const ApplicantPage({super.key});
@@ -11,7 +10,7 @@ class ApplicantPage extends StatelessWidget {
       body: Center(
         child: Text(
           '申办',
-          style: Get.textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
     );

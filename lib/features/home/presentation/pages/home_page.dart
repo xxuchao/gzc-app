@@ -1,84 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gzc_app/core/theme/colors.dart' show surfaceColor, actionColor, secondaryColor, secondaryTextColor;
 import 'package:gzc_app/core/theme/spacing.dart';
 import 'package:gzc_app/core/utils/devices.dart';
+import 'package:gzc_app/features/home/presentation/controllers/home_controller.dart';
+import 'package:gzc_app/features/home/presentation/widgets/home_shimmer.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  HomePageState  createState() => HomePageState ();
+  ConsumerState<HomePage> createState() => _HomePageContentState();
 }
 
-class HomePageState  extends State<HomePage> {
-  // 模拟轮播图数据
-  final List<String> bannerImages = [
-    'https://picsum.photos/300/200?random=2',
-    'https://picsum.photos/300/200?random=3',
-    'https://picsum.photos/300/200?random=4',
-  ];
-
-  // 功能图标数据
-  final List<Map<String, String>> functionItems = [
-    {'icon': '手机拍照', 'title': '手机拍照'},
-    {'icon': '手机录像', 'title': '手机录像'},
-    {'icon': '现场录音', 'title': '现场录音'},
-    {'icon': '电话录音', 'title': '电话录音'},
-    {'icon': '屏幕录制', 'title': '屏幕录制'},
-    {'icon': '短信取证', 'title': '短信取证'},
-    {'icon': '版权保护', 'title': '版权保护'},
-    {'icon': '邮件认证', 'title': '邮件认证'},
-    {'icon': '电子合同', 'title': '电子合同'},
-    {'icon': '网页取证', 'title': '网页取证'},
-    {'icon': '更多操作', 'title': '更多操作'},
-    {'icon': '更多操作', 'title': '更多操作'},
-  ];
-
-  // 二级分类标签
-  final List<String> tabs = ['网购', '现场取证', '其他', '网购', '现场取证', '其他'];
-  final List<Map<String, String>> contentItems = [
-    {'title': '网购', 'desc': '适用于网络平台侵权购物'},
-    {'title': '售货实录', 'desc': '适用于电子书、直播等无实体证物的维权场景'},
-    {'title': '售货实录', 'desc': '适用于电子书、直播等无实体证物的维权场景'},
-    {'title': '售货实录', 'desc': '适用于电子书、直播等无实体证物的维权场景'},
-    {'title': '售货实录', 'desc': '适用于电子书、直播等无实体证物的维权场景'},
-    {'title': '售货实录', 'desc': '适用于电子书、直播等无实体证物的维权场景'},
-  ];
-
+class _HomePageContentState extends ConsumerState<HomePage> {
   final double bannerHeight = 220.h;
-
   late final Map<String, double> fnParams;
 
   @override
   void initState() {
     super.initState();
-    fnParams = calculateFn();
+    fnParams = _calculateFnParams();
   }
 
   // 计算功能图标区参数
-  Map<String, double> calculateFn(){
-    const int crossAxisCount = 5; // 每行显示 5 个
-    final double axisSpacing = Spacing.sm; // 每个item的水平间距
-    final double boxMargin = Spacing.pageHorizontal; // 盒子距离屏幕两侧的距离
-    final double screenWidth = DeviceUtils.screenWidth - (2 * boxMargin); // 屏幕宽度
-    final double itemWidth = ((screenWidth - (crossAxisCount - 1) * axisSpacing) / 5); // 每个图标的大小
-    const double childAspectRatio = 0.9; // item的宽高比
-    final double itemHeight = itemWidth / childAspectRatio; 
+  Map<String, double> _calculateFnParams() {
+    const int crossAxisCount = 5;
+    final double axisSpacing = Spacing.sm;
+    final double boxMargin = Spacing.pageHorizontal;
+    final double screenWidth = DeviceUtils.screenWidth - (2 * boxMargin);
+    final double itemWidth = ((screenWidth - (crossAxisCount - 1) * axisSpacing) / 5);
+    const double childAspectRatio = 0.9;
+    final double itemHeight = itemWidth / childAspectRatio;
+    final double iconBgSize = itemWidth * 0.74;
+    final double boxPaddingV = Spacing.md;
+    final double boxPaddingH = axisSpacing;
 
-    final double iconBgSize = itemWidth * 0.74; // 图标背景大小
-
-    final double boxPaddingV = Spacing.md; // 垂直内边距
-    final double boxPaddingH = axisSpacing; // 水平内边距
-
-    late final double fnHeight;
-    if (functionItems.length > crossAxisCount) {
-      fnHeight = itemHeight * 2 + boxPaddingV * 2;
-    } else {
-      fnHeight = itemHeight + boxPaddingV * 2;
-    }
+    // 默认两行高度（用于 shimmer）
+    final double fnHeight = itemHeight * 2 + boxPaddingV * 2;
     final double areaTop = bannerHeight - (fnHeight * 0.3);
+
     return {
       'fnHeight': fnHeight,
       'areaTop': areaTop,
@@ -95,18 +58,34 @@ class HomePageState  extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final bannerValue = ref.watch(bannerProvider);
+    final fnValue = ref.watch(fnProvider);
+    final caseValue = ref.watch(caseProvider);
     return SafeArea(
       child: Scaffold(
         body: Stack(
           children: [
             // ====== 1. Banner 轮播图 ======
-            _buildBanner(),
+            bannerValue.when(
+              loading: () => BannerShimmer(bannerHeight: bannerHeight),
+              error: (e, st) => Text("Banner加载失败：${e.toString()}"),
+              data: (data) => _buildBanner(data),
+            ),
 
             // ====== 3. 案件取证区 ======
-            _buildCase(),
+            caseValue.when(
+              loading: () =>
+                  CaseShimmer(bannerHeight: bannerHeight, fnParams: fnParams),
+              error: (e, st) => Text("案件加载失败：${e.toString()}"),
+              data: (data) => _buildCase(data),
+            ),
 
             // ====== 2. 功能图标区 ======
-            _buildFn(context),
+            fnValue.when(
+              loading: () => FunctionShimmer(fnParams: fnParams),
+              error: (e, st) => Text("功能加载失败：${e.toString()}"),
+              data: (data) => _buildFn(context, data),
+            ),
           ],
         ),
       ),
@@ -114,7 +93,7 @@ class HomePageState  extends State<HomePage> {
   }
 
   // 轮播图区
-  Widget _buildBanner(){
+  Widget _buildBanner(List<String> bannerImages){
     return Positioned(
       top: 0,
       left: 0,
@@ -155,7 +134,7 @@ class HomePageState  extends State<HomePage> {
   }
 
   // 功能图标区
-  Widget _buildFn(BuildContext context){
+  Widget _buildFn(BuildContext context, List<Map<String, String>> functionItems){
     return Positioned(
       top: fnParams['areaTop'],
       left: 0,
@@ -214,7 +193,7 @@ class HomePageState  extends State<HomePage> {
   }
 
   // 案件取证区
-  Widget _buildCase(){
+  Widget _buildCase(List<Map<String, String>> caseItems){
     final double headerHeight = 70.h;
     final double headerPadding = headerHeight * 0.3;
     final double remainHeight = headerHeight - headerHeight;
@@ -247,14 +226,14 @@ class HomePageState  extends State<HomePage> {
               ),
             )
           ),
-          _buildCaseType()
+          _buildCaseType(caseItems)
         ],
       ),
     );
   }
 
   // 取证分类
-  Widget _buildCaseType(){
+  Widget _buildCaseType(List<Map<String, String>> caseItems){
     final double leadingSize = 56.w;
     return Expanded(
       child: DefaultTabController(
@@ -293,7 +272,7 @@ class HomePageState  extends State<HomePage> {
                 padding: EdgeInsets.only(top: Spacing.sm),
                 child: TabBarView(
                   children: List.generate(8, (index) {
-                  return _buildCaseList(index, leadingSize);
+                  return _buildCaseList(index, leadingSize, caseItems);
                 }),
                 ),
               )
@@ -305,13 +284,13 @@ class HomePageState  extends State<HomePage> {
   }
 
   // 取证内容列表
-  Widget _buildCaseList(int index, double leadingSize){
+  Widget _buildCaseList(int index, double leadingSize, List<Map<String, String>> caseItems){
     // TODO: 等到后端接口返回数据后，再实现， 不同的tab需要点击到才能加载数据列表
     return Container(
       margin: EdgeInsets.symmetric(horizontal: Spacing.pageHorizontal),
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: contentItems.length,
+        itemCount: caseItems.length,
         itemBuilder: (context, index) {
           return Card(
             color: surfaceColor,

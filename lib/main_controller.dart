@@ -1,26 +1,28 @@
 import "package:flutter/material.dart";
-import "package:get/get.dart";
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'features/home/presentation/pages/home_page.dart';
 import 'features/profile/presentation/pages/profile_page.dart';
-import 'features/Evidence/presentation/pages/evidence_page.dart';
+import 'features/evidence/presentation/pages/evidence_page.dart';
 import 'features/applicant/presentation/pages/applicant_page.dart';
 import 'features/case/presentation/pages/case_page.dart';
 
-class MainController extends GetxController {
-  final currentIndex = 0.obs;
+final mainCurrentIndexProvider =
+    NotifierProvider<MainCurrentIndexNotifier, int>(MainCurrentIndexNotifier.new);
 
-  // 存储所有页面列表
-  final List<Widget> pages = [
-    const HomePage(),
-    const EvidencePage(),
-    const CasePage(),
-    const ApplicantPage(),
-    const ProfilePage(),
-  ];
+class MainCurrentIndexNotifier extends Notifier<int> {
+  @override
+  int build() => 0;
 
-  // 切换页面
-  void changePage(int index) {
-    currentIndex.value = index;
-  }
+  void setIndex(int index) => state = index;
 }
+
+final mainPagesProvider = Provider<List<Widget>>(
+  (ref) => const [
+    HomePage(),
+    EvidencePage(),
+    CasePage(),
+    ApplicantPage(),
+    ProfilePage(),
+  ],
+);

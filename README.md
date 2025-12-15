@@ -22,7 +22,7 @@
 dependencies:
   flutter: 
     sdk: flutter
-  get: ^4.7.3 状态管理
+  flutter_riverpod: ^3.3.3 状态管理
   dio: ^5.9.0 网络请求
   pretty_dio_logger: ^1.4.0 网络请求日志美化
   path_provider: ^2.1.5 文件存储
@@ -33,6 +33,7 @@ dependencies:
   flutter_secure_storage: ^9.2.4 安全存储
   get_it: ^9.1.1 依赖注入
   injectable: ^2.7.0 依赖注入注解
+  json_annotation: ^4.9.0 注解
 
 ## 环境配置
 flutter doctor
@@ -101,3 +102,4 @@ gzc_app/                          # 项目根目录
 
 ## 注解代码
 - 需要运行 `flutter pub run build_runner build` or `dart run build_runner build` 生成依赖注入代码
+- 先删除再生成 `flutter pub run build_runner build --delete-conflicting-outputs` 如果数据结构发生改变

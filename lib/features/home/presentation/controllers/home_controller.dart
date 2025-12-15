@@ -1,49 +1,122 @@
-import 'package:get/get.dart';
-import '../../../../core/network/net_client.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeController extends GetxController {
-  // 状态管理
-  final isLoading = false.obs;
-  final errorMessage = ''.obs;
-  final data = [].obs;
-  
-  // 网络请求工具
-  final NetClient _dioClient = Get.find<NetClient>();
-  
+final bannerProvider =
+    AsyncNotifierProvider<BannerNotifier, List<String>>(BannerNotifier.new);
+
+final fnProvider = AsyncNotifierProvider<FnNotifier, List<Map<String, String>>>(
+  FnNotifier.new,
+);
+
+final caseProvider =
+    AsyncNotifierProvider<CaseNotifier, List<Map<String, String>>>(
+  CaseNotifier.new,
+);
+
+class BannerNotifier extends AsyncNotifier<List<String>> {
+  static const Duration _minLoadingDuration = Duration(milliseconds: 300);
+
   @override
-  void onInit() {
-    super.onInit();
-    fetchData();
+  Future<List<String>> build() async {
+    return _load();
   }
-  
-  Future<void> fetchData() async {
+
+  Future<void> refresh() async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(_load);
+  }
+
+  Future<List<String>> _load() async {
+    final startTime = DateTime.now();
     try {
-      isLoading(true);
-      errorMessage('');
-      
-      // 模拟网络请求
-      await Future.delayed(const Duration(seconds: 2));
-      
-      // 这里可以替换为实际的API调用
-      // final response = await _dioClient.get('/home/data');
-      // data(response.data);
-      
-      // 模拟数据
-      data([
-        {'title': '公证服务', 'description': '提供各类公证服务', 'icon': '📄'},
-        {'title': '在线预约', 'description': '快速预约公证时间', 'icon': '📅'},
-        {'title': '进度查询', 'description': '查询公证办理进度', 'icon': '🔍'},
-        {'title': '法律资讯', 'description': '最新法律资讯更新', 'icon': '📚'},
-      ]);
-    } catch (e) {
-      errorMessage('获取数据失败，请重试');
-      print('Error fetching data: $e');
+      await Future.delayed(const Duration(milliseconds: 800));
+      return const [
+        'https://picsum.photos/300/200?random=2',
+        'https://picsum.photos/300/200?random=3',
+        'https://picsum.photos/300/200?random=4',
+      ];
     } finally {
-      isLoading(false);
+      final elapsed = DateTime.now().difference(startTime);
+      if (elapsed < _minLoadingDuration) {
+        await Future.delayed(_minLoadingDuration - elapsed);
+      }
     }
   }
-  
-  void refreshData() {
-    fetchData();
+}
+
+class FnNotifier extends AsyncNotifier<List<Map<String, String>>> {
+  static const Duration _minLoadingDuration = Duration(milliseconds: 300);
+
+  @override
+  Future<List<Map<String, String>>> build() async {
+    return _load();
+  }
+
+  Future<void> refresh() async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(_load);
+  }
+
+  Future<List<Map<String, String>>> _load() async {
+    final startTime = DateTime.now();
+    try {
+      await Future.delayed(const Duration(milliseconds: 600));
+      return const [
+        {'icon': 'camera', 'title': '手机拍照'},
+        {'icon': 'videocam', 'title': '手机录像'},
+        {'icon': 'mic', 'title': '现场录音'},
+        {'icon': 'phone', 'title': '电话录音'},
+        {'icon': 'screen', 'title': '屏幕录制'},
+        {'icon': 'sms', 'title': '短信取证'},
+        {'icon': 'copyright', 'title': '版权保护'},
+        {'icon': 'email', 'title': '邮件认证'},
+        {'icon': 'contract', 'title': '电子合同'},
+        {'icon': 'web', 'title': '网页取证'},
+      ];
+    } finally {
+      final elapsed = DateTime.now().difference(startTime);
+      if (elapsed < _minLoadingDuration) {
+        await Future.delayed(_minLoadingDuration - elapsed);
+      }
+    }
   }
 }
+
+class CaseNotifier extends AsyncNotifier<List<Map<String, String>>> {
+  static const Duration _minLoadingDuration = Duration(milliseconds: 300);
+
+  @override
+  Future<List<Map<String, String>>> build() async {
+    return _load();
+  }
+
+  Future<void> refresh() async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(_load);
+  }
+
+  Future<List<Map<String, String>>> _load() async {
+    final startTime = DateTime.now();
+    try {
+      await Future.delayed(const Duration(milliseconds: 1000));
+      return const [
+        {'title': '网购', 'desc': '适用于网络平台侵权购物'},
+        {'title': '售货实录', 'desc': '适用于电子书、直播等无实体证物的维权场景'},
+        {'title': '售货实录', 'desc': '适用于电子书、直播等无实体证物的维权场景'},
+        {'title': '售货实录', 'desc': '适用于电子书、直播等无实体证物的维权场景'},
+        {'title': '售货实录', 'desc': '适用于电子书、直播等无实体证物的维权场景'},
+        {'title': '售货实录', 'desc': '适用于电子书、直播等无实体证物的维权场景'},
+      ];
+    } finally {
+      final elapsed = DateTime.now().difference(startTime);
+      if (elapsed < _minLoadingDuration) {
+        await Future.delayed(_minLoadingDuration - elapsed);
+      }
+    }
+  }
+}
+
+// 全局保留
+// final userProvider = NotifierProvider<UserNotifier, User>(UserNotifier.new);
+
+// 页面退出后自动清理
+// final formProvider = NotifierProvider.autoDispose<FormNotifier, FormData>(FormNotifier.new);
