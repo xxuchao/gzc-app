@@ -4,7 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'storage_service.dart';
 
-@Injectable(as: SecureStorageService)
+@Singleton(as: SecureStorageService)
 class FlutterSecureStorageService implements SecureStorageService {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 

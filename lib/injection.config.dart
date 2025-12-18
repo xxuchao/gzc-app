@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format width=80
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
 // InjectableConfigGenerator
@@ -23,10 +23,12 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.factory<_i44.SecureStorageService>(
+    gh.singleton<_i44.SecureStorageService>(
       () => _i1061.FlutterSecureStorageService(),
     );
-    gh.factory<_i44.LocalStorageService>(() => _i22.SharedPrefsService());
+    gh.singletonAsync<_i44.LocalStorageService>(
+      () => _i22.SharedPrefsService.create(),
+    );
     return this;
   }
 }

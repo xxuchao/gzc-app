@@ -3,14 +3,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:injectable/injectable.dart';
 import 'storage_service.dart';
 
-@Injectable(as: LocalStorageService)
+@Singleton(as: LocalStorageService)
 class SharedPrefsService implements LocalStorageService {
-  late final SharedPreferences _prefs;
+  final SharedPreferences _prefs;
+  SharedPrefsService._(this._prefs);
 
-  Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
+  @factoryMethod
+  static Future<SharedPrefsService> create() async {
+    final prefs = await SharedPreferences.getInstance();
+    return SharedPrefsService._(prefs);
   }
-
+  
   @override
   Future<void> setString(String key, String value) => _prefs.setString(key, value);
   @override

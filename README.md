@@ -103,3 +103,4 @@ gzc_app/                          # 项目根目录
 ## 注解代码
 - 需要运行 `flutter pub run build_runner build` or `dart run build_runner build` 生成依赖注入代码
 - 先删除再生成 `flutter pub run build_runner build --delete-conflicting-outputs` 如果数据结构发生改变
+- 新版Dart(>=2.18)FLutter(>=3.0) 使用 `dart run build_runner build --delete-conflicting-outputs`
