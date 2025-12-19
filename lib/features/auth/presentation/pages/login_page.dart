@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gzc_app/core/utils/app_message.dart';
 
 class LoginPage extends StatelessWidget {
 
@@ -93,9 +94,10 @@ class LoginPage extends StatelessWidget {
                       child: TextButton(
                         onPressed: () {
                           // 发送验证码逻辑
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('验证码已发送')),
-                          );
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //   SnackBar(content: Text('验证码已发送')),
+                          // );
+                          AppMessage.success("验证码已发送");
                         },
                         child: Text(
                           '获取验证码',
