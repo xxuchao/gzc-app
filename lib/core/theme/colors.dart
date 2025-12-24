@@ -20,4 +20,6 @@ const Color tagWarningColor = Color(0xFFEFB034);
 const Color tagSuccessColor = Color(0xFF67C23A);
 const Color tagDangerColor = Color(0xFFFF0000);
 
+const Color authButtonColor = Color(0xFFFFC400);
+
 const Color switchThumbSuccessColor = Color(0xFFCCE9C0);

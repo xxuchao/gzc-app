@@ -3,7 +3,7 @@ import 'package:gzc_app/core/constants/routes.dart';
 import 'package:gzc_app/core/router/bootstrap_page.dart';
 import 'package:gzc_app/core/router/error_page.dart';
 import 'package:gzc_app/core/widgets/main_view.dart';
-import 'package:gzc_app/features/auth/presentation/pages/login_page.dart';
+import 'package:gzc_app/features/auth/presentation/pages/login_with_sms.dart';
 
 class AppRouter {
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -18,10 +18,20 @@ class AppRouter {
           builder: (_) => const BootstrapPage(),
         );
       // 登录页
-      case AppRoutes.login:
+      case AppRoutes.loginWithPassword:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const LoginPage(),
+          builder: (_) => const LoginWithPasswordPage(),
+        );
+      case AppRoutes.loginWithOneTap:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const LoginWithPasswordPage(),
+        );
+      case AppRoutes.loginWithSms:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const LoginWithPasswordPage(),
         );
       // 首页
       case AppRoutes.home:
@@ -63,7 +73,7 @@ class AppRouter {
   }
 
   static Future<void> toLogin() {
-    return pushReplacementNamed<void, void>(AppRoutes.login);
+    return pushReplacementNamed<void, void>(AppRoutes.loginWithPassword);
   }
 
   static Future<void> toHome() {

@@ -34,6 +34,8 @@ dependencies:
   get_it: ^9.1.1 依赖注入
   injectable: ^2.7.0 依赖注入注解
   json_annotation: ^4.9.0 注解
+  toastification: ^3.0.3 信息提示
+  webview_flutter: 网页展示
 
 ## 环境配置
 flutter doctor

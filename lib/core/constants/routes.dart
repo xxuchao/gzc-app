@@ -1,6 +1,8 @@
 class AppRoutes {
   static const bootstrap = "/";
-  static const login = "/login";
+  static const loginWithPassword = "/loginWithPassword";
+  static const loginWithSms = "/loginWithSms";
+  static const loginWithOneTap = "/loginWithOneTap";
   static const home = "/home";
   static const dashboard = "/dashboard";
   static const settings = "/settings";

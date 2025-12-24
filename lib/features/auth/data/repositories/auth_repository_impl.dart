@@ -16,8 +16,8 @@ class AuthRepositoryImpl implements AuthRespository {
   });
 
   @override
-  Future<User> login(String phone, String password) async {
-    final user = await remoteDataSource.login(phone, password);
+  Future<User> loginWithPassword({required String phone, required String password}) async {
+    final user = await remoteDataSource.loginWithPassword(phone, password);
 
     final token = user.orgName;
 
@@ -26,9 +26,29 @@ class AuthRepositoryImpl implements AuthRespository {
 
     return user;
   }
+  
+  @override
+  Future<User> loginWithOneTap({required String phoneNumber, required String accessToken}) {
+    // TODO: implement loginWithOneTap
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<User> loginWithSmsCode({required String phone, required String code}) {
+    // TODO: implement loginWithSmsCode
+    throw UnimplementedError();
+  }
+
 
   @override
   void logout() {
     // TODO: implement logout
+  }
+
+// 👇 提取公共存储逻辑
+  Future<void> saveAuthData(User user) async {
+    // final token = user.orgName; // 或从其他字段获取
+    // await secureStorage.write(StorageKeys.authToken, token);
+    // await localStorage.setString(StorageKeys.user, jsonEncode(user.toJson()));
   }
 }

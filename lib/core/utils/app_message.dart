@@ -24,7 +24,7 @@ class AppMessage {
     String message, {
     String? description,
     AppMessagePosition position = AppMessagePosition.top,
-    Duration duration = const Duration(seconds: 2),
+    Duration duration = const Duration(seconds: 3),
   }) {
     return show(
       title: message,
@@ -39,7 +39,7 @@ class AppMessage {
     String message, {
     String? description,
     AppMessagePosition position = AppMessagePosition.top,
-    Duration duration = const Duration(seconds: 2),
+    Duration duration = const Duration(seconds: 3),
   }) {
     return show(
       title: message,
@@ -54,7 +54,7 @@ class AppMessage {
     String message, {
     String? description,
     AppMessagePosition position = AppMessagePosition.top,
-    Duration duration = const Duration(seconds: 2),
+    Duration duration = const Duration(seconds: 3),
   }) {
     return show(
       title: message,
@@ -71,9 +71,9 @@ class AppMessage {
     ToastificationType type = ToastificationType.info,
     ToastificationStyle style = ToastificationStyle.flat,
     AppMessagePosition position = AppMessagePosition.top,
-    Duration duration = const Duration(seconds: 2),
-    bool showProgressBar = true,
-    bool closeOnClick = true,
+    Duration duration = const Duration(seconds: 3),
+    bool showProgressBar = false,
+    bool closeOnClick = false,
     bool dragToClose = true,
     bool pauseOnHover = true,
     bool applyBlurEffect = false,

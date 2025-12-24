@@ -69,11 +69,15 @@ class Spacing {
   
   /// 16dp - 超大圆角
   static double get radiusXl => 16.r;
+
+  static double get radiusXXL => 20.r;
   
   /// 圆形
   static double get radiusFull => 999.r;
 
   // ============ 图标尺寸 ============
+  static double get iconXS => 12.w;
+
   /// 16dp - 小图标
   static double get iconSm => 16.w;
   

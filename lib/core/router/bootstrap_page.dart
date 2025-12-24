@@ -24,14 +24,16 @@ class _BootstrapPageState extends State<BootstrapPage> {
     final localStorage = getIt<LocalStorageService>();
     final token = await localStorage.getString(StorageKeys.authToken);
 
+    await Future.delayed(const Duration(milliseconds: 500));
     if (!mounted) return;
 
-    final targetRoute = (token != null && token.isNotEmpty)
-        ? AppRoutes.home
-        : AppRoutes.login;
-    await Future.delayed(const Duration(milliseconds: 500));
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).pushReplacementNamed(targetRoute);
+    if ((token ?? "").isNotEmpty) {
+      Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+    }else {
+      final targetRoute = AppRoutes.loginWithSms;
+      // TODO: 判断能否获取本机号码跳转不同的登录界面
+      Navigator.of(context).pushReplacementNamed(targetRoute);
+    }
   }
 
   @override
