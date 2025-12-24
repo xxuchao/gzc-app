@@ -17,14 +17,14 @@ import 'package:gzc_app/features/auth/presentation/widgets/countdown_code_btn.da
 import '../widgets/phone_text_field.dart' show PhoneTextField;
 import '../widgets/protocol.dart' show ProtocolAgreement;
 
-class LoginWithPasswordPage extends StatefulWidget {
-  const LoginWithPasswordPage({super.key});
+class LoginWithSmsPage extends StatefulWidget {
+  const LoginWithSmsPage({super.key});
 
   @override
-  State<LoginWithPasswordPage> createState() => _LoginWithPasswordPageState();
+  State<LoginWithSmsPage> createState() => _LoginWithPasswordPageState();
 }
 
-class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
+class _LoginWithPasswordPageState extends State<LoginWithSmsPage> {
   final _formKey = GlobalKey<FormState>();
   final _phoneKey = GlobalKey<FormFieldState>();
   final _phoneController = TextEditingController();
@@ -41,9 +41,11 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
 
   // 登录
   Future<void> _onLoginPressed() async {
+    await Future.delayed(const Duration(seconds: 2));
     if (_formKey.currentState!.validate()) {
       final phone = _phoneController.text;
       final code = _codeController.text;
+      AppMessage.success("登陆中");
       print("$phone $code");
     }else {
       print("校验失败");
@@ -156,7 +158,7 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
             children: [
               TextNavigateButton(
                 text: '手机号一键登录',
-                route: AppRoutes.home,
+                route: AppRoutes.loginWithOneTap,
                 textColor: surfaceColor,
                 canPop: false,
               ),
@@ -170,7 +172,7 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
               SizedBox(width: Spacing.xs),
               TextNavigateButton(
                 text: '账号密码登录',
-                route: AppRoutes.home,
+                route: AppRoutes.loginWithPassword,
                 textColor: surfaceColor,
                 canPop: false,
               ),
@@ -179,7 +181,7 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
         ),
         TextNavigateButton(
           text: '忘记密码？',
-          route: AppRoutes.home,
+          route: AppRoutes.forgetPassword,
           textColor: surfaceColor,
         ),
       ],

@@ -3,6 +3,7 @@ class AppRoutes {
   static const loginWithPassword = "/loginWithPassword";
   static const loginWithSms = "/loginWithSms";
   static const loginWithOneTap = "/loginWithOneTap";
+  static const forgetPassword = "/forgetPassword";
   static const home = "/home";
   static const dashboard = "/dashboard";
   static const settings = "/settings";

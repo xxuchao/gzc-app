@@ -3,6 +3,9 @@ import 'package:gzc_app/core/constants/routes.dart';
 import 'package:gzc_app/core/router/bootstrap_page.dart';
 import 'package:gzc_app/core/router/error_page.dart';
 import 'package:gzc_app/core/widgets/main_view.dart';
+import 'package:gzc_app/features/auth/presentation/pages/forget_password.dart';
+import 'package:gzc_app/features/auth/presentation/pages/login_with_one_tap.dart';
+import 'package:gzc_app/features/auth/presentation/pages/login_with_password.dart';
 import 'package:gzc_app/features/auth/presentation/pages/login_with_sms.dart';
 
 class AppRouter {
@@ -26,12 +29,19 @@ class AppRouter {
       case AppRoutes.loginWithOneTap:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const LoginWithPasswordPage(),
+          builder: (_) => const LoginWithOneTapPage(),
         );
       case AppRoutes.loginWithSms:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const LoginWithPasswordPage(),
+          builder: (_) => const LoginWithSmsPage(),
+        );
+
+      // 忘记密码
+      case AppRoutes.forgetPassword:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const ForgetPasswordPage(),
         );
       // 首页
       case AppRoutes.home:

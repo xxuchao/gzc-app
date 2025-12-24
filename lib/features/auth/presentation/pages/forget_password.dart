@@ -17,25 +17,25 @@ import 'package:gzc_app/features/auth/presentation/widgets/countdown_code_btn.da
 import '../widgets/phone_text_field.dart' show PhoneTextField;
 import '../widgets/protocol.dart' show ProtocolAgreement;
 
-class LoginWithOneTapPage extends StatefulWidget {
-  const LoginWithOneTapPage({super.key});
+class ForgetPasswordPage extends StatefulWidget {
+  const ForgetPasswordPage({super.key});
 
   @override
-  State<LoginWithOneTapPage> createState() => _LoginWithPasswordPageState();
+  State<ForgetPasswordPage> createState() => _LoginWithPasswordPageState();
 }
 
-class _LoginWithPasswordPageState extends State<LoginWithOneTapPage> {
+class _LoginWithPasswordPageState extends State<ForgetPasswordPage> {
   final _formKey = GlobalKey<FormState>();
   final _phoneKey = GlobalKey<FormFieldState>();
   final _phoneController = TextEditingController();
   final _codeController = TextEditingController();
-
-  bool _agreed = false;
+  final _passwordController = TextEditingController();
 
   @override
   void dispose() {
     _phoneController.dispose();
     _codeController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -45,8 +45,9 @@ class _LoginWithPasswordPageState extends State<LoginWithOneTapPage> {
     if (_formKey.currentState!.validate()) {
       final phone = _phoneController.text;
       final code = _codeController.text;
+      final password = _passwordController.text;
       AppMessage.success("登陆中");
-      print("$phone $code");
+      print("$phone $code $password");
     }else {
       print("校验失败");
       throw Exception("校验失败");
@@ -67,6 +68,9 @@ class _LoginWithPasswordPageState extends State<LoginWithOneTapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("忘记密码"),
+      ),
       backgroundColor: primaryColor, // 深蓝色背景
       body: SafeArea(
         child: Padding(
@@ -89,36 +93,36 @@ class _LoginWithPasswordPageState extends State<LoginWithOneTapPage> {
                           LoginTitle(),
                           SizedBox(height: Spacing.xxxl),
 
-                          // 显示手机号（部分隐藏）
-                          Text(
-                            '173****7335',
-                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: surfaceColor, fontWeight: FontWeight.w700),
-                          ),
-                          SizedBox(height: Spacing.md),
-                          Text(
-                            '由中国电信提供',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: surfaceColor),
+                          // 手机号输入框
+                          PhoneTextField(
+                            formKey: _phoneKey,
+                            controller: _phoneController,
+                            validator: Validators.phone,
                           ),
 
-                          SizedBox(height: Spacing.xxxl),
+                          // 验证码输入框 + 获取验证码按钮
+                          _buildCode(),
+
+                          // 密码输入框
+                          AuthTextField(
+                            controller: _passwordController,
+                            maxLength: 20,
+                            hintText: '新密码',
+                            validator: Validators.password,
+                            obscureText: true,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9]*$')),
+                            ],
+                          ),
+
                           // 登录按钮
                           LoadingElevatedButton(
-                            text: "本机号码一键登录",
+                            text: "确认修改密码",
                             onPressed: _onLoginPressed,
                           ),
                           SizedBox(height: Spacing.xl),
 
-                          // 其他登录方式
-                          _buildOtherLoginWay(),
-
                           Spacer(),
-                          // 协议勾选框
-                          ProtocolAgreement(
-                            value: _agreed,
-                            onChanged: (v) => setState(() => _agreed = v),
-                            userAgreementUrl: ApplicationBase.userAgreementUrl,
-                            privacyPolicyUrl: ApplicationBase.privacyPolicyUrl,
-                          ),
                         ],
                       ),
                     ),
@@ -132,44 +136,20 @@ class _LoginWithPasswordPageState extends State<LoginWithOneTapPage> {
     );
   }
 
-  // 其他登录方式
-  Widget _buildOtherLoginWay() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Row(
-            children: [
-              TextNavigateButton(
-                text: '手机号一键登录',
-                route: AppRoutes.loginWithOneTap,
-                textColor: surfaceColor,
-                canPop: false,
-              ),
-              SizedBox(width: Spacing.xs),
-              Text(
-                "或",
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(color: surfaceColor),
-              ),
-              SizedBox(width: Spacing.xs),
-              TextNavigateButton(
-                text: '账号密码登录',
-                route: AppRoutes.loginWithPassword,
-                textColor: surfaceColor,
-                canPop: false,
-              ),
-            ],
-          ),
-        ),
-        TextNavigateButton(
-          text: '忘记密码？',
-          route: AppRoutes.forgetPassword,
-          textColor: surfaceColor,
-        ),
+  // 验证码输入框 + 获取验证码按钮
+  Widget _buildCode() {
+    return AuthTextField(
+      controller: _codeController,
+      maxLength: 6,
+      hintText: '验证码',
+      validator: Validators.code,
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9]*$')),
       ],
+      suffixIcon: Padding(
+        padding: EdgeInsets.all(Spacing.xs),
+        child: CountdownCodeButton(onPressed: _onCodePresssed),
+      ),
     );
   }
 }

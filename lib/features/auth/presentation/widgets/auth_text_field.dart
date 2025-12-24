@@ -25,7 +25,7 @@ class AuthTextField extends StatelessWidget {
     this.textInputAction,
     this.inputFormatters,
     this.validator,
-    this.suffixIcon
+    this.suffixIcon,
   });
 
   @override
