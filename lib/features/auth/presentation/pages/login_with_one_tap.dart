@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gzc_app/core/constants/app_base.dart';
 import 'package:gzc_app/core/constants/routes.dart';
 import 'package:gzc_app/core/utils/app_message.dart' show AppMessage;
 import 'package:gzc_app/core/widgets/text_navigate_button.dart';
 import 'package:gzc_app/features/auth/presentation/widgets/auth_btn.dart';
-import 'package:gzc_app/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:gzc_app/features/auth/presentation/widgets/auto_logo.dart'
     show LoginLogo, LoginTitle;
 import "package:gzc_app/core/theme/colors.dart" show primaryColor, surfaceColor;
 import "package:gzc_app/core/theme/spacing.dart" show Spacing;
-import 'package:gzc_app/core/utils/validators.dart' show Validators;
-import 'package:gzc_app/features/auth/presentation/widgets/countdown_code_btn.dart';
-
-import '../widgets/phone_text_field.dart' show PhoneTextField;
 import '../widgets/protocol.dart' show ProtocolAgreement;
 
 class LoginWithOneTapPage extends StatefulWidget {
@@ -52,18 +46,7 @@ class _LoginWithPasswordPageState extends State<LoginWithOneTapPage> {
       throw Exception("校验失败");
     }
   }
-
-  // 获取验证码
-  Future<void> _onCodePresssed() async {
-    await Future.delayed(const Duration(seconds: 2));
-    if (_phoneKey.currentState!.validate()) {
-      AppMessage.success("验证码已发送");
-    } else {
-      print("校验失败");
-      throw Exception("校验失败");
-    }
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,8 +125,8 @@ class _LoginWithPasswordPageState extends State<LoginWithOneTapPage> {
           child: Row(
             children: [
               TextNavigateButton(
-                text: '手机号一键登录',
-                route: AppRoutes.loginWithOneTap,
+                text: '验证码登录',
+                route: AppRoutes.loginWithSms,
                 textColor: surfaceColor,
                 canPop: false,
               ),

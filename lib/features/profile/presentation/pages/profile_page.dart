@@ -1,18 +1,180 @@
 import 'package:flutter/material.dart';
+import 'package:gzc_app/core/constants/app_images.dart';
+import 'package:gzc_app/core/theme/colors.dart' show primaryColor, surfaceColor, secondaryTextColor, tagSuccessColor, tagWarningColor;
+import 'package:gzc_app/core/theme/spacing.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    print("Profile Build");
     return Scaffold(
-      body: Center(
-        child: Text(
-          '我的',
-          style: Theme.of(context).textTheme.headlineMedium,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 头部信息区域
+            _buildInfo(context),
+        
+            // 存证币余额
+            _buildBalance(context),
+            
+            SizedBox(height: Spacing.lg),
+
+            // 功能列表
+            _buildFunctionList(context),
+          ],
         ),
       ),
     );
   }
+
+  // 用户信息区域
+  Widget _buildInfo(BuildContext context){
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: Spacing.lg, horizontal: Spacing.pageHorizontal),
+      color: surfaceColor,
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 32,
+            backgroundImage: Image.asset(AppImages.logo).image, // TODO: 替换为真实头像URL
+          ),
+          SizedBox(width: Spacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '真实姓名（机构名称）',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: Spacing.xs),
+                Text(
+                  '18958266666',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: secondaryTextColor),
+                ),
+                SizedBox(height: Spacing.xs),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: tagSuccessColor,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        '已实名认证',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(color: surfaceColor),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: tagWarningColor,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        '去实名认证',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(color: surfaceColor),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 存证币余额
+  Widget _buildBalance(BuildContext context){
+    // 存证币余额
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: Spacing.pageHorizontal),
+      padding: EdgeInsets.all(Spacing.pageHorizontal),
+      decoration: BoxDecoration(
+        color: primaryColor,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(Spacing.radiusLg),
+          bottomRight: Radius.circular(Spacing.radiusLg),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '可用存证币',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: surfaceColor),
+              ),
+              SizedBox(height: Spacing.xs),
+              Text(
+                '3610',
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: surfaceColor),
+              ),
+            ],
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: surfaceColor,
+              foregroundColor: Colors.blue,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Spacing.radiusXXL)),
+              padding: EdgeInsets.symmetric(horizontal: Spacing.xxxl),
+            ),
+            child: const Text('充值'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 功能列表
+  Widget _buildFunctionList(BuildContext context){
+    return Expanded(
+      child: ListView.separated(
+        separatorBuilder: (context, index) => const Divider(height: 0, thickness: 0.5,),
+        shrinkWrap: true,
+        itemCount: 7,
+        itemBuilder: (context, index) {
+          final List<MenuItem> items = [
+            MenuItem(title: '我的资料', icon: Icons.person),
+            MenuItem(title: '申请人管理', icon: Icons.group),
+            MenuItem(title: '地址管理', icon: Icons.location_on),
+            MenuItem(title: '发票管理', icon: Icons.receipt),
+            MenuItem(title: '收费标准', icon: Icons.attach_money),
+            MenuItem(title: '分享APP', icon: Icons.share),
+            MenuItem(title: '系统设置', icon: Icons.settings),
+          ];
+          return Container(
+            color: surfaceColor,
+            child: ListTile(
+              horizontalTitleGap: Spacing.xs,
+              contentPadding: EdgeInsets.symmetric(horizontal: Spacing.pageHorizontal),
+              leading: Icon(items[index].icon, color: primaryColor, size: Spacing.iconMd),
+              title: Text(
+                items[index].title,
+                style: Theme.of(context).textTheme.bodyMedium
+              ),
+              // trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+              onTap: () {},
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class MenuItem {
+  final String title;
+  final IconData icon;
+
+  const MenuItem({required this.title, required this.icon});
 }

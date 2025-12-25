@@ -12,7 +12,6 @@ import 'package:gzc_app/features/auth/presentation/widgets/auto_logo.dart'
 import "package:gzc_app/core/theme/colors.dart" show primaryColor, surfaceColor;
 import "package:gzc_app/core/theme/spacing.dart" show Spacing;
 import 'package:gzc_app/core/utils/validators.dart' show Validators;
-import 'package:gzc_app/features/auth/presentation/widgets/countdown_code_btn.dart';
 
 import '../widgets/phone_text_field.dart' show PhoneTextField;
 import '../widgets/protocol.dart' show ProtocolAgreement;
