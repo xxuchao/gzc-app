@@ -13,7 +13,7 @@ final appLightTheme = ThemeData(
     error: tagDangerColor,
     onPrimary: textColor,
     onSurface: textColor,
-    onSurfaceVariant: secondaryTextColor
+    onSurfaceVariant: secondaryTextColor,
   ),
   textTheme: TextTheme(
     displayLarge: displayLarge,
@@ -42,6 +42,8 @@ final appLightTheme = ThemeData(
     style: ButtonStyle(
       backgroundColor: WidgetStateProperty.all(primaryColor),
       foregroundColor: WidgetStateProperty.all(Colors.white),
+      splashFactory: InkRipple.splashFactory, // 使用 InkRipple
+      overlayColor: WidgetStateProperty.all(Colors.blue.withValues(alpha: 0.3)), 
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -53,6 +55,10 @@ final appLightTheme = ThemeData(
   ),
   listTileTheme: ListTileThemeData(
     titleTextStyle: titleSmall.copyWith(color: textColor),
-    subtitleTextStyle: bodyMedium.copyWith(color: secondaryTextColor)
+    subtitleTextStyle: bodyMedium.copyWith(color: secondaryTextColor),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    hintStyle: bodyMedium,
+    labelStyle: bodyMedium
   )
 );

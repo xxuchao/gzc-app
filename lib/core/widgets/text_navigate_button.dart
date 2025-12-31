@@ -1,6 +1,6 @@
 // lib/core/widgets/text_navigate_button.dart
 import 'package:flutter/material.dart';
-import 'package:gzc_app/core/theme/spacing.dart';
+import 'package:go_router/go_router.dart';
 
 /// 文字跳转按钮：点击文字跳转到新页面
 class TextNavigateButton extends StatelessWidget {
@@ -40,9 +40,9 @@ class TextNavigateButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (canPop) {
-          Navigator.of(context).pushNamed(route);
+          context.push(route);
         } else {
-          Navigator.of(context).pushReplacementNamed(route);
+          context.go(route);
         }
       },
       child: Text(

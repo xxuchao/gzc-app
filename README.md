@@ -36,6 +36,9 @@ dependencies:
   json_annotation: ^4.9.0 注解
   toastification: ^3.0.3 信息提示
   webview_flutter: 网页展示
+  share_plus: 分享
+  go_router: 路由管理
+  flutter_slidable: 滑动展示功能菜单
 
 ## 环境配置
 flutter doctor

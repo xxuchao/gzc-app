@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gzc_app/core/constants/app_images.dart';
+import 'package:gzc_app/core/constants/routes.dart';
 import 'package:gzc_app/core/theme/colors.dart' show primaryColor, surfaceColor, secondaryTextColor, tagSuccessColor, tagWarningColor;
 import 'package:gzc_app/core/theme/spacing.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -37,7 +40,7 @@ class ProfilePage extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            radius: 32,
+            radius: Spacing.iconXl,
             backgroundImage: Image.asset(AppImages.logo).image, // TODO: 替换为真实头像URL
           ),
           SizedBox(width: Spacing.md),
@@ -144,13 +147,13 @@ class ProfilePage extends StatelessWidget {
         itemCount: 7,
         itemBuilder: (context, index) {
           final List<MenuItem> items = [
-            MenuItem(title: '我的资料', icon: Icons.person),
-            MenuItem(title: '申请人管理', icon: Icons.group),
-            MenuItem(title: '地址管理', icon: Icons.location_on),
-            MenuItem(title: '发票管理', icon: Icons.receipt),
-            MenuItem(title: '收费标准', icon: Icons.attach_money),
-            MenuItem(title: '分享APP', icon: Icons.share),
-            MenuItem(title: '系统设置', icon: Icons.settings),
+            MenuItem(title: '我的资料', route: AppRoutes.profile, icon: Icons.person),
+            MenuItem(title: '申请人管理', route: AppRoutes.applicantManagement, icon: Icons.group),
+            MenuItem(title: '地址管理', route: AppRoutes.addressManagement, icon: Icons.location_on),
+            MenuItem(title: '发票管理', route: AppRoutes.invoiceManagement, icon: Icons.receipt),
+            MenuItem(title: '收费标准', route: AppRoutes.feeStandard, icon: Icons.attach_money),
+            MenuItem(title: '分享APP', route: "share", icon: Icons.share),
+            MenuItem(title: '系统设置', route: AppRoutes.settings, icon: Icons.settings),
           ];
           return Container(
             color: surfaceColor,
@@ -163,7 +166,16 @@ class ProfilePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium
               ),
               // trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-              onTap: () {},
+              onTap: () {
+                if (items[index].route == "share") {
+                  // TODO: 实现分享功能
+                  SharePlus.instance.share(
+                    ShareParams(text: 'check out my website https://example.com')
+                  );
+                } else {
+                  context.push(items[index].route);
+                }
+              },
             ),
           );
         },
@@ -174,7 +186,8 @@ class ProfilePage extends StatelessWidget {
 
 class MenuItem {
   final String title;
+  final String route;
   final IconData icon;
 
-  const MenuItem({required this.title, required this.icon});
+  const MenuItem({required this.title, required this.route, required this.icon});
 }

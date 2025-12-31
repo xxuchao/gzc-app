@@ -10,6 +10,8 @@ class Spacing {
   /// 4dp - 极小间距（图标与文字间距）
   static double get xs => 4.w;
   
+  static double get smx => 6.w;
+
   /// 8dp - 小间距（紧凑元素间距）
   static double get sm => 8.w;
   
@@ -33,7 +35,7 @@ class Spacing {
   static double get pageHorizontal => 14.w;
   
   /// 20dp - 页面顶部边距
-  static double get pageTop => 20.h;
+  static double get pageTop => 16.h;
   
   /// 24dp - 页面底部边距（考虑底部安全区）
   static double get pageBottom => 24.h;
@@ -46,7 +48,7 @@ class Spacing {
   static double get cardPadding => 12.w;
   
   /// 16dp - 卡片间距
-  static double get cardGap => 16.h;
+  static double get cardGap => 14.h;
   
   /// 8dp - 按钮内水平边距
   static double get buttonPaddingH => 16.w;
@@ -76,6 +78,8 @@ class Spacing {
   static double get radiusFull => 999.r;
 
   // ============ 图标尺寸 ============
+  static double get iconXXXS => 10.w;
+
   static double get iconXS => 12.w;
 
   /// 16dp - 小图标

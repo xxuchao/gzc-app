@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gzc_app/core/constants/routes.dart';
 import 'package:gzc_app/core/constants/storage_keys.dart';
 import 'package:gzc_app/core/local_storage/storage_service.dart';
@@ -28,11 +29,11 @@ class _BootstrapPageState extends State<BootstrapPage> {
     if (!mounted) return;
 
     if ((token ?? "").isEmpty) {
-      Navigator.of(context).pushReplacementNamed(AppRoutes.home);
-    }else {
+      context.go(AppRoutes.home);
+    } else {
       final targetRoute = AppRoutes.loginWithSms;
       // TODO: 判断能否获取本机号码跳转不同的登录界面
-      Navigator.of(context).pushReplacementNamed(targetRoute);
+      context.go(targetRoute);
     }
   }
 

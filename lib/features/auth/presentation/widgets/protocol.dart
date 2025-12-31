@@ -77,7 +77,7 @@ class ProtocolAgreement extends StatelessWidget {
           child: Theme(
             data: ThemeData(unselectedWidgetColor: surfaceColor),
             child: Transform.scale(
-              scale: 0.8,
+              scale: 0.85,
               child: Checkbox(
                 value: value,
                 onChanged: (v) => onChanged(v ?? false),
