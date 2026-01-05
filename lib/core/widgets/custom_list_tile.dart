@@ -41,8 +41,8 @@ class CustomListTile extends StatelessWidget {
         horizontal: horizontalPadding ?? Spacing.pageHorizontal,
         vertical: verticalPadding ?? Spacing.cardGap,
       ),
-
       decoration: BoxDecoration(
+        color: onTap == null ? Theme.of(context).colorScheme.surface : null,
         border: showBottomBorder
           ? Border(
               bottom: BorderSide(
@@ -85,9 +85,14 @@ class CustomListTile extends StatelessWidget {
 
     // 仅在需要点击时包裹 InkWell，不加 Material
     if (onTap != null) {
-      return InkWell(
-        onTap: onTap,
-        child: content,
+      return Ink(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface
+        ),
+        child: InkWell(
+          onTap: onTap,
+          child: content,
+        ),
       );
     }
     return content;

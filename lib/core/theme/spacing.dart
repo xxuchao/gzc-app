@@ -48,7 +48,7 @@ class Spacing {
   static double get cardPadding => 12.w;
   
   /// 16dp - 卡片间距
-  static double get cardGap => 14.h;
+  static double get cardGap => 16.h;
   
   /// 8dp - 按钮内水平边距
   static double get buttonPaddingH => 16.w;

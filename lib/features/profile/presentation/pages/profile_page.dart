@@ -147,13 +147,13 @@ class ProfilePage extends StatelessWidget {
         itemCount: 7,
         itemBuilder: (context, index) {
           final List<MenuItem> items = [
-            MenuItem(title: '我的资料', route: AppRoutes.profile, icon: Icons.person),
-            MenuItem(title: '申请人管理', route: AppRoutes.applicantManagement, icon: Icons.group),
-            MenuItem(title: '地址管理', route: AppRoutes.addressManagement, icon: Icons.location_on),
-            MenuItem(title: '发票管理', route: AppRoutes.invoiceManagement, icon: Icons.receipt),
-            MenuItem(title: '收费标准', route: AppRoutes.feeStandard, icon: Icons.attach_money),
-            MenuItem(title: '分享APP', route: "share", icon: Icons.share),
-            MenuItem(title: '系统设置', route: AppRoutes.settings, icon: Icons.settings),
+            MenuItem(title: '我的资料', route: AppRoutes.profile, icon: Icons.person, diver: true),
+            MenuItem(title: '申请人管理', route: AppRoutes.applicantManagement, icon: Icons.group, diver: true),
+            MenuItem(title: '地址管理', route: AppRoutes.addressManagement, icon: Icons.location_on, diver: true),
+            MenuItem(title: '发票管理', route: AppRoutes.invoiceManagement, icon: Icons.receipt, diver: true),
+            MenuItem(title: '收费标准', route: AppRoutes.feeStandard, icon: Icons.attach_money, diver: true),
+            MenuItem(title: '分享APP', route: "share", icon: Icons.share, diver: true),
+            MenuItem(title: '系统设置', route: AppRoutes.settings, icon: Icons.settings, diver: true),
           ];
           return Container(
             color: surfaceColor,
@@ -188,6 +188,7 @@ class MenuItem {
   final String title;
   final String route;
   final IconData icon;
+  final bool diver;
 
-  const MenuItem({required this.title, required this.route, required this.icon});
+  const MenuItem({required this.title, required this.route, required this.icon, required this.diver});
 }

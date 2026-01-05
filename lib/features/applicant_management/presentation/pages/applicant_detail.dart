@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gzc_app/core/theme/colors.dart' show diverColor;
 import 'package:gzc_app/core/theme/spacing.dart';
 import 'package:gzc_app/core/widgets/custom_card.dart';
+import 'package:gzc_app/core/widgets/custom_list_tile.dart';
 import 'package:gzc_app/core/widgets/custom_tabbar.dart';
 import 'package:gzc_app/core/widgets/title_tile.dart';
 
@@ -10,8 +11,8 @@ class ApplicantDetail extends StatelessWidget {
 
   final List<CardTileData> applicantInfo = [
     CardTileData(title: "申请人名称", text: "张三", arrow: false),
-    CardTileData(title: "联系手机号", text: "13333333333", arrow: true),
-    CardTileData(title: "备注", text: "暂无备注", arrow: true),
+    CardTileData(title: "联系手机号", text: "13333333333", arrow: true, onTap: (){}),
+    CardTileData(title: "备注", text: "暂无备注", arrow: true, border: false, onTap: (){}),
   ];
 
   final List<CardTileData> idCardInfo = [
@@ -59,16 +60,32 @@ class ApplicantDetail extends StatelessWidget {
         ),
         CustomCard(
           padding: EdgeInsets.zero,
+          material: true,
           child: Column(
             children: [
-              Padding(
+              Container(
                 padding: EdgeInsets.all(Spacing.pageHorizontal),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: diverColor,
+                      width: 0.5,
+                    ),
+                  )
+                ),
                 child: TitleTile(
                   title: "基本信息",
                 ),
               ),
               ...applicantInfo.map((item) {
-                return _buildCardTile(item);
+                // return _buildCardTile(item);
+                return CustomListTile(
+                  title: item.title,
+                  showBottomBorder: item.border,
+                  showTrailingArrow: item.arrow,
+                  trailing: Text(item.text),
+                  onTap: item.onTap,
+                );
               })
             ],
           ),
@@ -77,14 +94,27 @@ class ApplicantDetail extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: Column(
             children: [
-              Padding(
+              Container(
                 padding: EdgeInsets.all(Spacing.pageHorizontal),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: diverColor,
+                      width: 0.5,
+                    ),
+                  )
+                ),
                 child: TitleTile(
                   title: "证件信息",
                 ),
               ),
               ...idCardInfo.map((item) {
-                return _buildCardTile(item);
+                // return _buildCardTile(item);
+                return CustomListTile(
+                  title: item.title,
+                  showBottomBorder: item.border,
+                  trailing: Text(item.text),
+                );
               })
             ],
           ),
@@ -132,10 +162,14 @@ class CardTileData {
   final String title;
   final String text;
   final bool arrow;
+  final VoidCallback? onTap;
+  final bool border;
 
   const CardTileData({
     required this.title,
     required this.text,
-    required this.arrow
+    required this.arrow,
+    this.onTap,
+    this.border = true
   }); 
 }

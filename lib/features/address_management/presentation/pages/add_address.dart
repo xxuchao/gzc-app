@@ -128,7 +128,7 @@ class AddAddressPage extends StatelessWidget {
             rate: 2,
             btns: [
               OperateButtonData(
-                "申请添加人",
+                "保存",
                 () => { print("保存")}
               ),
             ],

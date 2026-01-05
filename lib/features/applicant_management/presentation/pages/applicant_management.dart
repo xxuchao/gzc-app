@@ -148,29 +148,6 @@ class _ApplicantManagementPageState extends State<ApplicantManagementPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // 设为默认选项
-              // GestureDetector(
-              //   onTap: () => _checkDefault(applicant),
-              //   child: Row(
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     children: [
-              //       Icon(
-              //         applicant.isDefault 
-              //             ? Icons.check_circle 
-              //             : Icons.radio_button_unchecked,
-              //         color: applicant.isDefault 
-              //             ? tagWarningColor
-              //             : secondaryTextColor,
-              //         size: Spacing.iconMd,
-              //       ),
-              //       SizedBox(width: Spacing.xs),
-              //       Text(
-              //         '设为默认',
-              //         style: Theme.of(context).textTheme.bodyMedium // ?.copyWith(height: 1.4),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               CircleCheckRadio(
                 label: "设为默认",
                 isSelected: defaultAddressIndex == index,
