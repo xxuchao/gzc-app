@@ -15,6 +15,7 @@ class CustomTabBar extends StatelessWidget {
   final Color? indicatorColor;
   final double dividerHeight;
   final EdgeInsetsGeometry? tabBarViewPadding;
+  final ScrollPhysics? scroll;
 
   const CustomTabBar({
     super.key,
@@ -29,6 +30,7 @@ class CustomTabBar extends StatelessWidget {
     this.indicatorColor,
     this.dividerHeight = 0,
     this.tabBarViewPadding,
+    this.scroll
   }) : assert(tabs.length > 0),
        assert(tabs.length == tabViews.length);
 
@@ -55,7 +57,7 @@ class CustomTabBar extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: TabBarView(children: tabViews.map((item) {
+            child: TabBarView(physics: scroll, children: tabViews.map((item) {
               return Padding(
                 padding: tabBarViewPadding ?? EdgeInsets.only(top: Spacing.pageTop, left: Spacing.pageHorizontal, right: Spacing.pageHorizontal),
                 child: item,

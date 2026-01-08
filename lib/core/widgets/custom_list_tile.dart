@@ -85,14 +85,9 @@ class CustomListTile extends StatelessWidget {
 
     // 仅在需要点击时包裹 InkWell，不加 Material
     if (onTap != null) {
-      return Ink(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface
-        ),
-        child: InkWell(
-          onTap: onTap,
-          child: content,
-        ),
+      return InkWell(
+        onTap: onTap,
+        child: content,
       );
     }
     return content;

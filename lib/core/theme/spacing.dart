@@ -42,6 +42,8 @@ class Spacing {
 
   // ============ 组件间距 ============
   /// 8dp - 列表项垂直间距
+  static double get verticalGapXS => 4.h;
+
   static double get listItemGap => 8.h;
   
   /// 12dp - 卡片内边距

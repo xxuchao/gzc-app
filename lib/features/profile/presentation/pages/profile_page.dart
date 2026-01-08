@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gzc_app/core/constants/app_images.dart';
 import 'package:gzc_app/core/constants/routes.dart';
+import 'package:gzc_app/core/router/app_router.dart';
 import 'package:gzc_app/core/theme/colors.dart' show primaryColor, surfaceColor, secondaryTextColor, tagSuccessColor, tagWarningColor;
 import 'package:gzc_app/core/theme/spacing.dart';
 import 'package:share_plus/share_plus.dart';
@@ -173,7 +174,8 @@ class ProfilePage extends StatelessWidget {
                     ShareParams(text: 'check out my website https://example.com')
                   );
                 } else {
-                  context.push(items[index].route);
+                  // context.push(items[index].route);
+                  AppRouter.pushNamed(items[index].route);
                 }
               },
             ),

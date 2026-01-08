@@ -39,6 +39,7 @@ dependencies:
   share_plus: 分享
   go_router: 路由管理
   flutter_slidable: 滑动展示功能菜单
+  timelines_plus: 时间线
 
 ## 环境配置
 flutter doctor

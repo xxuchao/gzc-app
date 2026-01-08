@@ -12,6 +12,7 @@ import 'package:gzc_app/features/auth/presentation/pages/forget_password.dart';
 import 'package:gzc_app/features/auth/presentation/pages/login_with_one_tap.dart';
 import 'package:gzc_app/features/auth/presentation/pages/login_with_password.dart';
 import 'package:gzc_app/features/auth/presentation/pages/login_with_sms.dart';
+import 'package:gzc_app/features/case_detail/presentation/pages/case_detail_page.dart';
 import 'package:gzc_app/features/fee_standard/presentation/pages/fee_standard.dart';
 import 'package:gzc_app/features/profile/presentation/pages/my_profile_page.dart';
 import 'package:gzc_app/features/setting/presentation/pages/setting.dart';
@@ -128,6 +129,10 @@ class AppRouter {
       _route(
         AppRoutes.home,
         (state) => const MainView(),
+      ),
+      _route(
+        AppRoutes.caseDetail,
+        (state) => const CaseDetailPage(),
       ),
       _route(
         AppRoutes.profile,

@@ -7,6 +7,9 @@ class AppRoutes {
   static const home = "/home"; // 首页
   static const dashboard = "/dashboard"; // 首页
 
+  // 案件
+  static const caseDetail = "/casedetail"; // 首页
+
   static const profile = "/profile"; // 个人中心
   static const applicantManagement = "/applicantManagement"; // 申请人管理
   static const applicantDetail = "/applicantDetail"; // 申请人详情

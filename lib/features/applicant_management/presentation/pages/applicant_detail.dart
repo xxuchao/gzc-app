@@ -27,7 +27,7 @@ class ApplicantDetail extends StatelessWidget {
       Tab(text: "申请人类型"),
       Tab(text: "身份证明材料"),
       Tab(text: "其他证明材料"),
-    ]; 
+    ];
     final List<Widget Function()> tabViews = [
       _buildApplicantInformation,
       _buildIdCardMaterial,
