@@ -10,7 +10,7 @@ import 'package:gzc_app/features/auth/presentation/widgets/auth_text_field.dart'
 import 'package:gzc_app/features/auth/presentation/widgets/auto_logo.dart'
     show LoginLogo, LoginTitle;
 import "package:gzc_app/core/theme/colors.dart" show primaryColor, surfaceColor;
-import "package:gzc_app/core/theme/spacing.dart" show Spacing;
+import "package:gzc_app/core/theme/spacing.dart" show Spacing, xs;
 import 'package:gzc_app/core/utils/validators.dart' show Validators;
 
 import '../widgets/phone_text_field.dart' show PhoneTextField;
@@ -30,6 +30,8 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
   final _passwordController = TextEditingController();
 
   bool _agreed = false;
+  int loginType = 1; // 2:机构子用户登录 1：普通用户登录
+
 
   @override
   void dispose() {
@@ -75,8 +77,21 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
                           Spacer(),
                           LoginLogo(),
                           LoginTitle(),
-                          SizedBox(height: Spacing.xxxl),
-
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                loginType = loginType == 1 ? 2 : 1;
+                              });
+                              String changeText = loginType == 1 ? "普通用户登录" : "机构子用户登录";
+                              AppMessage.info("切换$changeText");
+                            },
+                            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                              Icon(Icons.swap_horizontal_circle_outlined, color: surfaceColor, size: Spacing.iconMd,),
+                              SizedBox(width: Spacing.xs,),
+                              Text(loginType == 1 ? "普通用户登录" : "机构子用户登录", style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: surfaceColor),)
+                            ],),
+                          ),
+                          SizedBox(height: Spacing.buttonPaddingV),
                           // 手机号输入框
                           PhoneTextField(
                             formKey: _phoneKey,
@@ -137,8 +152,8 @@ class _LoginWithPasswordPageState extends State<LoginWithPasswordPage> {
           child: Row(
             children: [
               TextNavigateButton(
-                text: '手机号一键登录',
-                route: AppRoutes.loginWithOneTap,
+                text: "手机号一键登录", // '手机号一键登录',
+                route: "", //AppRoutes.loginWithOneTap,
                 textColor: surfaceColor,
                 canPop: false,
               ),

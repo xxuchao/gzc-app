@@ -27,3 +27,8 @@ const Color authButtonColor = Color(0xFFFFC400);
 const Color lightGrey = Color(0xFFF8FAFB);
 
 const Color switchThumbSuccessColor = Color(0xFFCCE9C0);
+
+// 系统导航栏颜色选项
+const Color systemNavBarLight = Color(0xFFFFFFFF); // 白色
+const Color systemNavBarDark = Color(0xFF000000);  // 黑色
+const Color systemNavBarGrey = Color(0xFFF5F5F5);  // 浅灰色

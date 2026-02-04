@@ -56,7 +56,10 @@ class _SelectableChipGroupState extends State<SelectableChipGroup> {
             }
           },
           backgroundColor: Colors.grey[200],
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: Spacing.md, vertical: 0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Spacing.radiusXXL), // 👈 自定义圆角弧度
+          ),
         );
       }).toList(),
     );

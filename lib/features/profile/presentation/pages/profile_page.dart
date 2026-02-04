@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:gzc_app/core/constants/app_images.dart';
 import 'package:gzc_app/core/constants/routes.dart';
 import 'package:gzc_app/core/router/app_router.dart';
@@ -12,24 +11,20 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 头部信息区域
-            _buildInfo(context),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 头部信息区域
+        _buildInfo(context),
+    
+        // 存证币余额
+        _buildBalance(context),
         
-            // 存证币余额
-            _buildBalance(context),
-            
-            SizedBox(height: Spacing.lg),
+        SizedBox(height: Spacing.lg),
 
-            // 功能列表
-            _buildFunctionList(context),
-          ],
-        ),
-      ),
+        // 功能列表
+        _buildFunctionList(context),
+      ],
     );
   }
 
@@ -145,7 +140,7 @@ class ProfilePage extends StatelessWidget {
       child: ListView.separated(
         separatorBuilder: (context, index) => const Divider(height: 0, thickness: 0.5,),
         shrinkWrap: true,
-        itemCount: 7,
+        itemCount: 8,
         itemBuilder: (context, index) {
           final List<MenuItem> items = [
             MenuItem(title: '我的资料', route: AppRoutes.profile, icon: Icons.person, diver: true),
@@ -153,6 +148,7 @@ class ProfilePage extends StatelessWidget {
             MenuItem(title: '地址管理', route: AppRoutes.addressManagement, icon: Icons.location_on, diver: true),
             MenuItem(title: '发票管理', route: AppRoutes.invoiceManagement, icon: Icons.receipt, diver: true),
             MenuItem(title: '收费标准', route: AppRoutes.feeStandard, icon: Icons.attach_money, diver: true),
+            MenuItem(title: '我的推荐码', route: AppRoutes.referralCode, icon: Icons.developer_board_outlined, diver: true),
             MenuItem(title: '分享APP', route: "share", icon: Icons.share, diver: true),
             MenuItem(title: '系统设置', route: AppRoutes.settings, icon: Icons.settings, diver: true),
           ];

@@ -44,6 +44,8 @@ class Spacing {
   /// 8dp - 列表项垂直间距
   static double get verticalGapXS => 4.h;
 
+  static double get verticalGapMd => 6.h;
+
   static double get listItemGap => 8.h;
   
   /// 12dp - 卡片内边距
@@ -60,6 +62,8 @@ class Spacing {
   
   /// 12dp - 输入框内边距
   static double get inputPadding => 12.w;
+  
+  static double get buttonHeight => 46.h;
 
   // ============ 圆角 ============
   /// 4dp - 小圆角（按钮、标签）

@@ -5,6 +5,8 @@ import 'package:gzc_app/core/theme/colors.dart';
 import 'package:gzc_app/core/theme/spacing.dart';
 import 'package:gzc_app/core/widgets/checkradio.dart';
 import 'package:gzc_app/core/widgets/custom_card.dart';
+import 'package:gzc_app/core/widgets/functional_dialog.dart';
+import 'package:gzc_app/core/widgets/show_confirm_dialog.dart';
 
 class AddressManagement extends StatefulWidget {
   const AddressManagement({super.key});
@@ -112,8 +114,19 @@ class AddressManagementState extends State<AddressManagement> {
                           ),
                           SizedBox(width: Spacing.md,),
                           GestureDetector(
-                            onTap: () {
-                              deleteAddress(index);
+                            onTap: () async {
+                              // deleteAddress(index);
+                              // final result = await showCustomStyledDialog(
+                              //   context: context,
+                              //   title: "确认删除?",
+                              //   content: "删除后不可恢复，是否继续?",
+                              // );
+                              // print(result);
+                              showFunctionalDialog(
+                                context: context,
+                                title: Text("123123"),
+                                content: Text("content")
+                              );
                             },
                             child: const Text(
                               '删除',

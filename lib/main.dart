@@ -9,17 +9,7 @@ import 'injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarIconBrightness: Brightness.light,
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-      statusBarBrightness: Brightness.light, // 控制状态栏图标的亮度（iOS）
-    ),
-  );
 
   configureDependencies(); // 初始化 DI
   await getIt.allReady();
@@ -36,12 +26,29 @@ class MainApp extends StatelessWidget {
       designSize: const Size(390, 844), // const Size(375, 812)
       minTextAdapt: true,
       splitScreenMode: true,
+      // builder: (context, child) {
+      //   return MaterialApp.router(
+      //     title: '云尚公证处',
+      //     theme: appLightTheme,
+      //     debugShowCheckedModeBanner: true,
+      //     routerConfig: AppRouter.router,
+      //   );
+      // },
       builder: (context, child) {
-        return MaterialApp.router(
-          title: '云尚公证处',
-          theme: appLightTheme,
-          debugShowCheckedModeBanner: true,
-          routerConfig: AppRouter.router,
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            systemNavigationBarColor: Colors.white, // 修改这里设置底部区域颜色
+            systemNavigationBarIconBrightness: Brightness.dark, // 图标颜色
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
+          ),
+          child: MaterialApp.router(
+            title: '云尚公证处',
+            theme: appLightTheme,
+            debugShowCheckedModeBanner: true,
+            routerConfig: AppRouter.router,
+          ),
         );
       },
     );

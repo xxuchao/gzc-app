@@ -15,7 +15,7 @@ class BottomOperate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final boxHeight = 54.h;
+    final boxHeight = 56.h;
     final btnHeight = boxHeight - Spacing.smx * 2;
     return Container(
       height: boxHeight,

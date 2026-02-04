@@ -1,6 +1,7 @@
 // lib/core/widgets/text_navigate_button.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gzc_app/core/utils/app_message.dart';
 
 /// 文字跳转按钮：点击文字跳转到新页面
 class TextNavigateButton extends StatelessWidget {
@@ -28,27 +29,31 @@ class TextNavigateButton extends StatelessWidget {
     this.style,
     this.underline = false,
     this.canPop = true,
-    this.textColor = Colors.blue
+    this.textColor = Colors.blue,
   });
 
   @override
   Widget build(BuildContext context) {
-    final defaultStyle = Theme.of(context).textTheme.bodySmall?.copyWith(
-      color: textColor
-    );
+    final defaultStyle = Theme.of(
+      context,
+    ).textTheme.bodySmall?.copyWith(color: textColor);
 
     return GestureDetector(
       onTap: () {
+        if (route == "") {
+          AppMessage.info("暂未开放此功能");
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text('暂未开放')),
+          // );
+          return;
+        }
         if (canPop) {
           context.push(route);
         } else {
           context.go(route);
         }
       },
-      child: Text(
-          text,
-          style: style ?? defaultStyle,
-        )
+      child: Text(text, style: style ?? defaultStyle),
     );
   }
 }

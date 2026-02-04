@@ -158,7 +158,7 @@ class _LoginWithPasswordPageState extends State<LoginWithSmsPage> {
             children: [
               TextNavigateButton(
                 text: '手机号一键登录',
-                route: AppRoutes.loginWithOneTap,
+                route: "",// AppRoutes.loginWithOneTap,
                 textColor: surfaceColor,
                 canPop: false,
               ),

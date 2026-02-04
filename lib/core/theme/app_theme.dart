@@ -1,6 +1,7 @@
 // lib/core/theme/app_theme.dart
 import 'colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gzc_app/core/theme/text_styles.dart';
 
 final appLightTheme = ThemeData(
@@ -37,6 +38,13 @@ final appLightTheme = ThemeData(
     backgroundColor: surfaceColor,
     foregroundColor: textColor,
     elevation: 0,
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      
+      systemNavigationBarColor: surfaceColor, // 底部导航栏颜色
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(

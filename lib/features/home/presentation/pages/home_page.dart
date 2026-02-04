@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gzc_app/core/router/app_router.dart';
 import 'package:gzc_app/core/theme/colors.dart' show surfaceColor, actionColor, secondaryColor, secondaryTextColor;
 import 'package:gzc_app/core/theme/spacing.dart';
+import 'package:gzc_app/core/utils/app_message.dart';
 import 'package:gzc_app/core/utils/devices.dart';
+import 'package:gzc_app/core/widgets/custom_card.dart';
+import 'package:gzc_app/core/widgets/custom_tabbar.dart';
 import 'package:gzc_app/features/home/presentation/controllers/home_controller.dart';
 import 'package:gzc_app/features/home/presentation/widgets/home_shimmer.dart';
 
@@ -61,34 +65,30 @@ class _HomePageContentState extends ConsumerState<HomePage> {
     final bannerValue = ref.watch(bannerProvider);
     final fnValue = ref.watch(fnProvider);
     final caseValue = ref.watch(caseProvider);
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            // ====== 1. Banner 轮播图 ======
-            bannerValue.when(
-              loading: () => BannerShimmer(bannerHeight: bannerHeight),
-              error: (e, st) => Text("Banner加载失败：${e.toString()}"),
-              data: (data) => _buildBanner(data),
-            ),
-
-            // ====== 3. 案件取证区 ======
-            caseValue.when(
-              loading: () =>
-                  CaseShimmer(bannerHeight: bannerHeight, fnParams: fnParams),
-              error: (e, st) => Text("案件加载失败：${e.toString()}"),
-              data: (data) => _buildCase(data),
-            ),
-
-            // ====== 2. 功能图标区 ======
-            fnValue.when(
-              loading: () => FunctionShimmer(fnParams: fnParams),
-              error: (e, st) => Text("功能加载失败：${e.toString()}"),
-              data: (data) => _buildFn(context, data),
-            ),
-          ],
+    return Stack(
+      children: [
+        // ====== 1. Banner 轮播图 ======
+        bannerValue.when(
+          loading: () => BannerShimmer(bannerHeight: bannerHeight),
+          error: (e, st) => Text("Banner加载失败：${e.toString()}"),
+          data: (data) => _buildBanner(data),
         ),
-      ),
+    
+        // ====== 3. 案件取证区 ======
+        caseValue.when(
+          loading: () =>
+              CaseShimmer(bannerHeight: bannerHeight, fnParams: fnParams),
+          error: (e, st) => Text("案件加载失败：${e.toString()}"),
+          data: (data) => _buildCase(data),
+        ),
+    
+        // ====== 2. 功能图标区 ======
+        fnValue.when(
+          loading: () => FunctionShimmer(fnParams: fnParams),
+          error: (e, st) => Text("功能加载失败：${e.toString()}"),
+          data: (data) => _buildFn(context, data),
+        ),
+      ],
     );
   }
 
@@ -134,7 +134,7 @@ class _HomePageContentState extends ConsumerState<HomePage> {
   }
 
   // 功能图标区
-  Widget _buildFn(BuildContext context, List<Map<String, String>> functionItems){
+  Widget _buildFn(BuildContext context, List<FnData> functionItems){
     return Positioned(
       top: fnParams['areaTop'],
       left: 0,
@@ -162,26 +162,35 @@ class _HomePageContentState extends ConsumerState<HomePage> {
             itemCount: functionItems.length,
             itemBuilder: (context, index) {
               final item = functionItems[index];
-              return Container(
-                color: surfaceColor,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: fnParams['iconBgSize']!,
-                      height: fnParams['iconBgSize']!,
-                      decoration: BoxDecoration(
-                        color: actionColor,
-                        borderRadius: BorderRadius.circular(Spacing.radiusSm),
+              return InkWell(
+                onTap: (){
+                  if (item.route == "none") {
+                    AppMessage.info("未开放");
+                  }else {
+                    AppRouter.pushNamed(item.route);
+                  }
+                },
+                child: Container(
+                  color: surfaceColor,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: fnParams['iconBgSize']!,
+                        height: fnParams['iconBgSize']!,
+                        decoration: BoxDecoration(
+                          color: actionColor,
+                          borderRadius: BorderRadius.circular(Spacing.radiusSm),
+                        ),
+                        child: Icon(item.icon, color: surfaceColor, size: Spacing.iconXl),
                       ),
-                      child: Icon(Icons.camera_alt, color: surfaceColor, size: Spacing.iconXl),
-                    ),
-                    Text(
-                      item['title']!,
-                      style: Theme.of(context).textTheme.labelMedium,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                      Text(
+                        item.title,
+                        style: Theme.of(context).textTheme.labelMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
@@ -234,57 +243,25 @@ class _HomePageContentState extends ConsumerState<HomePage> {
 
   // 取证分类
   Widget _buildCaseType(List<Map<String, String>> caseItems){
-    final double leadingSize = 56.w;
     return Expanded(
-      child: DefaultTabController(
-        length: 8,
-        child: Column(
-          children: [
-            Container(
-              color: surfaceColor,
-              padding: EdgeInsets.symmetric(horizontal: Spacing.md),
-              child: PreferredSize(
-                preferredSize: Size.fromHeight(46.h),
-                child: TabBar(
-                  padding: EdgeInsets.zero,
-                  indicatorPadding: EdgeInsets.zero,
-                  labelPadding: EdgeInsets.symmetric(horizontal: Spacing.md),
-                  tabAlignment: TabAlignment.start,
-                  isScrollable: true,
-                  labelColor: secondaryColor,
-                  dividerHeight: 0,
-                  indicatorColor: secondaryColor,
-                  tabs: [
-                    Tab(text: "全部"),
-                    Tab(text: "待审核"),
-                    Tab(text: "未通过"),
-                    Tab(text: "已通过"),
-                    Tab(text: "已完成"),
-                    Tab(text: "已取消"),
-                    Tab(text: "已拒绝"),
-                    Tab(text: "已过期"),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(top: Spacing.sm),
-                child: TabBarView(
-                  children: List.generate(8, (index) {
-                  return _buildCaseList(index, leadingSize, caseItems);
-                }),
-                ),
-              )
-            )
-          ],
-        ),
-      ),
+      child: CustomTabBar(
+        tabBarViewPadding: EdgeInsets.only(top: Spacing.listItemGap),
+        tabs: [
+          Tab(text: "网购",),
+          Tab(text: "现场取证",),
+          Tab(text: "其他",)
+        ],
+        tabViews: [
+          _buildCaseList(0, caseItems),
+          _buildCaseList(1, caseItems),
+          _buildCaseList(2, caseItems)
+        ],
+      )
     );
   }
 
   // 取证内容列表
-  Widget _buildCaseList(int index, double leadingSize, List<Map<String, String>> caseItems){
+  Widget _buildCaseList(int index, List<Map<String, String>> caseItems){
     // TODO: 等到后端接口返回数据后，再实现， 不同的tab需要点击到才能加载数据列表
     return Container(
       margin: EdgeInsets.symmetric(horizontal: Spacing.pageHorizontal),
@@ -292,28 +269,24 @@ class _HomePageContentState extends ConsumerState<HomePage> {
         shrinkWrap: true,
         itemCount: caseItems.length,
         itemBuilder: (context, index) {
-          return Card(
-            color: surfaceColor,
-            margin: EdgeInsets.only(bottom: Spacing.sm),
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Spacing.radiusMd),
-            ),
-            child: ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: Spacing.md),
-              leading: Container(
-                width: leadingSize,
-                height: leadingSize,
+          return CustomCard(
+            margin: EdgeInsets.only(bottom: Spacing.listItemGap),
+            child: Row(children: [
+              Container(
+                width: 46,
+                height: 46,
                 decoration: BoxDecoration(
                   color: actionColor,
                   borderRadius: BorderRadius.circular(Spacing.radiusSm),
                 ),
                 child: Icon(Icons.check_circle, color: surfaceColor, size: Spacing.iconXl,),
               ),
-              horizontalTitleGap: Spacing.md,
-              title: Text("网购$index"),
-              subtitle: Text(maxLines: 2, overflow: TextOverflow.ellipsis, "适用于网络平台购物侵权$index"),
-            ),
+              SizedBox(width: Spacing.md,),
+              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text("网购$index",),
+                Text(maxLines: 2, overflow: TextOverflow.ellipsis, "适用于网络平台购物侵权$index")
+              ],),)
+            ],)
           );
         },
       ),

@@ -38,15 +38,11 @@ class _CasePageState extends State<CasePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: CustomTabBar(
-          scroll: const NeverScrollableScrollPhysics(),
-          tabBarViewPadding: EdgeInsets.zero,
-          tabs: caseTabs,
-          tabViews: [_buildSingleCase(context), _buildProjectCase(context)],
-        ),
-      ),
+    return CustomTabBar(
+      scroll: const NeverScrollableScrollPhysics(),
+      tabBarViewPadding: EdgeInsets.zero,
+      tabs: caseTabs,
+      tabViews: [_buildSingleCase(context), _buildProjectCase(context)],
     );
   }
 

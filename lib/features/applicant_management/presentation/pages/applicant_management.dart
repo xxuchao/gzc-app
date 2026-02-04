@@ -87,28 +87,30 @@ class _ApplicantManagementPageState extends State<ApplicantManagementPage> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         title: const Text('申请人管理',),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.only(top: Spacing.pageTop, left: Spacing.pageHorizontal, right: Spacing.pageHorizontal),
-              itemCount: applicants.length,
-              itemBuilder: (context, index) {
-                return _buildApplicantCard(context, applicants[index], index);
-              },
-            ),
-          ),
-
-          BottomOperate(
-            rate: 2,
-            btns: [
-              OperateButtonData(
-                "申请添加人",
-                () => { print("申请添加人")}
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.only(top: Spacing.pageTop, left: Spacing.pageHorizontal, right: Spacing.pageHorizontal),
+                itemCount: applicants.length,
+                itemBuilder: (context, index) {
+                  return _buildApplicantCard(context, applicants[index], index);
+                },
               ),
-            ],
-          )
-        ],
+            ),
+        
+            BottomOperate(
+              rate: 2,
+              btns: [
+                OperateButtonData(
+                  "申请添加人",
+                  () => { print("申请添加人")}
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

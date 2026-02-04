@@ -21,12 +21,13 @@ class AddAddressPage extends StatelessWidget {
           AppRouter.pop();
         }, icon: Icon(Icons.close)),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: Spacing.pageHorizontal, vertical: Spacing.pageTop),
-              child: Column(
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: Spacing.pageHorizontal, vertical: Spacing.pageTop),
                 children: [
                   // 粘贴自动识别框
                   CustomCard(
@@ -123,17 +124,17 @@ class AddAddressPage extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          BottomOperate(
-            rate: 2,
-            btns: [
-              OperateButtonData(
-                "保存",
-                () => { print("保存")}
-              ),
-            ],
-          )
-        ],
+            BottomOperate(
+              rate: 2,
+              btns: [
+                OperateButtonData(
+                  "保存",
+                  () => { print("保存")}
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gzc_app/core/constants/routes.dart';
 
 final bannerProvider =
     AsyncNotifierProvider<BannerNotifier, List<String>>(BannerNotifier.new);
 
-final fnProvider = AsyncNotifierProvider<FnNotifier, List<Map<String, String>>>(
+final fnProvider = AsyncNotifierProvider<FnNotifier, List<FnData>>(
   FnNotifier.new,
 );
 
@@ -43,11 +45,22 @@ class BannerNotifier extends AsyncNotifier<List<String>> {
   }
 }
 
-class FnNotifier extends AsyncNotifier<List<Map<String, String>>> {
+class FnData {
+  final IconData icon;
+  final String title;
+  final String route;
+  FnData({
+    required this.icon,
+    required this.title,
+    required this.route
+  });
+}
+
+class FnNotifier extends AsyncNotifier<List<FnData>> {
   static const Duration _minLoadingDuration = Duration(milliseconds: 300);
 
   @override
-  Future<List<Map<String, String>>> build() async {
+  Future<List<FnData>> build() async {
     return _load();
   }
 
@@ -56,21 +69,32 @@ class FnNotifier extends AsyncNotifier<List<Map<String, String>>> {
     state = await AsyncValue.guard(_load);
   }
 
-  Future<List<Map<String, String>>> _load() async {
+  Future<List<FnData>> _load() async {
     final startTime = DateTime.now();
     try {
       await Future.delayed(const Duration(milliseconds: 600));
-      return const [
-        {'icon': 'camera', 'title': '手机拍照'},
-        {'icon': 'videocam', 'title': '手机录像'},
-        {'icon': 'mic', 'title': '现场录音'},
-        {'icon': 'phone', 'title': '电话录音'},
-        {'icon': 'screen', 'title': '屏幕录制'},
-        {'icon': 'sms', 'title': '短信取证'},
-        {'icon': 'copyright', 'title': '版权保护'},
-        {'icon': 'email', 'title': '邮件认证'},
-        {'icon': 'contract', 'title': '电子合同'},
-        {'icon': 'web', 'title': '网页取证'},
+      return <FnData>[
+        FnData(icon: Icons.camera, title: "手机拍照", route: AppRoutes.takingPictures),
+        FnData(icon: Icons.phone, title: "手机录像", route: AppRoutes.recordVideo),
+        FnData(icon: Icons.live_tv, title: "现场录音", route: AppRoutes.liveRecording),
+        FnData(icon: Icons.record_voice_over, title: "电话录音", route: AppRoutes.phoneRecording),
+        FnData(icon: Icons.screen_lock_landscape, title: "屏幕录制", route: AppRoutes.screenRecording),
+        FnData(icon: Icons.sms, title: "短信取证", route: AppRoutes.smsForensics),
+        FnData(icon: Icons.copyright, title: "版权保护", route: "none"),
+        FnData(icon: Icons.email, title: "邮件认证", route: "none"),
+        FnData(icon: Icons.electric_scooter_outlined, title: "电子合同", route: AppRoutes.electronicContract),
+        FnData(icon: Icons.web, title: "网页取证", route: AppRoutes.webForensics),
+
+        // {'icon': 'camera', 'title': '手机拍照'},
+        // {'icon': 'videocam', 'title': '手机录像'},
+        // {'icon': 'mic', 'title': '现场录音'},
+        // {'icon': 'phone', 'title': '电话录音'},
+        // {'icon': 'screen', 'title': '屏幕录制'},
+        // {'icon': 'sms', 'title': '短信取证'},
+        // {'icon': 'copyright', 'title': '版权保护'},
+        // {'icon': 'email', 'title': '邮件认证'},
+        // {'icon': 'contract', 'title': '电子合同'},
+        // {'icon': 'web', 'title': '网页取证'},
       ];
     } finally {
       final elapsed = DateTime.now().difference(startTime);

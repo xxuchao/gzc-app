@@ -4,17 +4,18 @@ import 'package:gzc_app/core/theme/spacing.dart';
 class CustomCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final bool material;
   final bool radius;
   final Color? color;
-  const CustomCard({super.key, required this.child, this.padding, this.material = false, this.radius = true, this.color});
+  const CustomCard({super.key, required this.child, this.padding, this.material = false, this.radius = true, this.color, this.margin});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.hardEdge,
       width: double.maxFinite,
-      margin: EdgeInsets.only(bottom: Spacing.cardGap),
+      margin: margin ?? EdgeInsets.only(bottom: Spacing.cardGap),
       padding: padding ?? EdgeInsets.all(Spacing.pageHorizontal),
       decoration: BoxDecoration(
         color: color ?? Theme.of(context).colorScheme.surface,

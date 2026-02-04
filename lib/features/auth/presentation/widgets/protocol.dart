@@ -1,45 +1,49 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:gzc_app/core/constants/routes.dart';
+import 'package:gzc_app/core/models/webview_args.dart';
+import 'package:gzc_app/core/router/app_router.dart';
 import 'package:gzc_app/core/theme/colors.dart' show actionColor, surfaceColor;
 import 'package:gzc_app/core/theme/spacing.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+// import 'package:gzc_app/features/webview/webview.utils.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
-class ProtocolWebViewPage extends StatefulWidget {
-  final String title;
-  final String url;
+// class ProtocolWebViewPage extends StatefulWidget {
+//   final String title;
+//   final String url;
 
-  const ProtocolWebViewPage({
-    super.key,
-    required this.title,
-    required this.url,
-  });
+//   const ProtocolWebViewPage({
+//     super.key,
+//     required this.title,
+//     required this.url,
+//   });
 
-  @override
-  State<ProtocolWebViewPage> createState() => _ProtocolWebViewPageState();
-}
+//   @override
+//   State<ProtocolWebViewPage> createState() => _ProtocolWebViewPageState();
+// }
 
-class _ProtocolWebViewPageState extends State<ProtocolWebViewPage> {
-  late final WebViewController _controller;
+// class _ProtocolWebViewPageState extends State<ProtocolWebViewPage> {
+//   late final WebViewController _controller;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse(widget.url));
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     _controller = WebViewController()
+//       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+//       ..loadRequest(Uri.parse(widget.url));
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: WebViewWidget(controller: _controller),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(widget.title),
+//       ),
+//       body: WebViewWidget(controller: _controller),
+//     );
+//   }
+// }
 
 class ProtocolAgreement extends StatelessWidget {
   final bool value;
@@ -55,13 +59,13 @@ class ProtocolAgreement extends StatelessWidget {
     required this.privacyPolicyUrl,
   });
 
-  void _openWebView(BuildContext context, {required String title, required String url}) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => ProtocolWebViewPage(title: title, url: url),
-      ),
-    );
-  }
+  // void _openWebView(BuildContext context, {required String title, required String url}) {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       builder: (_) => ProtocolWebViewPage(title: title, url: url),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -108,12 +112,12 @@ class ProtocolAgreement extends StatelessWidget {
                 TextSpan(
                   text: '《用户协议》',
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () => _openWebView(context, title: '用户协议', url: userAgreementUrl),
+                    ..onTap = () => AppRouter.pushNamed(AppRoutes.webview, arguments: WebViewArgs(title: "用户协议", url: userAgreementUrl)), // openWebView(context, title: '用户协议', url: userAgreementUrl),
                 ),
                 TextSpan(
                   text: '《隐私政策》',
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () => _openWebView(context, title: '隐私政策', url: privacyPolicyUrl),
+                    ..onTap = () => AppRouter.pushNamed(AppRoutes.webview, arguments: WebViewArgs(title: "隐私政策", url: privacyPolicyUrl)),
                 ),
                 TextSpan(
                   text: '、并使用本机号码登录',
