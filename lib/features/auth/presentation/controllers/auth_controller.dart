@@ -17,11 +17,11 @@ class AuthState {
   });
 
   factory AuthState.initial() => const AuthState(
-        isLoading: false,
-        errorMessage: '',
-        isLoggedIn: false,
-        userInfo: {},
-      );
+    isLoading: false,
+    errorMessage: '',
+    isLoggedIn: false,
+    userInfo: {},
+  );
 
   AuthState copyWith({
     bool? isLoading,
@@ -38,7 +38,9 @@ class AuthState {
   }
 }
 
-final authProvider = NotifierProvider<AuthNotifier, AuthState>(AuthNotifier.new);
+final authProvider = NotifierProvider<AuthNotifier, AuthState>(
+  AuthNotifier.new,
+);
 
 class AuthNotifier extends Notifier<AuthState> {
   final NetClient _dioClient = NetClient();
