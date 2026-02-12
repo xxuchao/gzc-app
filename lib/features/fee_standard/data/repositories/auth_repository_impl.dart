@@ -24,7 +24,7 @@ class AuthRepositoryImpl implements AuthRespository {
     await localStorage.setString('auth_token', token);
     // await localStorage.setString('user', jsonEncode(user.toJson())); // UserModel 需要 toJson()
 
-    return user;
+    return user.toEntity();
   }
   
   @override

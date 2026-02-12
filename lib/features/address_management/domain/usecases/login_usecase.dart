@@ -8,6 +8,6 @@ class LoginUsecase {
   LoginUsecase({required this.repository});
 
   // Future<User> call(String phone, String password) {
-  //   return repository.loginWithPassword(phone: "xxx", password: "xxx");
+  //   return repository.loginWithPassword(phone: phone, password: password);
   // }
 }

@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gzc_app/core/constants/routes.dart';
 import 'package:gzc_app/core/router/app_router.dart';
-import 'package:gzc_app/core/theme/colors.dart' show surfaceColor, actionColor, secondaryColor, secondaryTextColor;
+import 'package:gzc_app/core/theme/colors.dart' show surfaceColor, actionColor, secondaryTextColor;
 import 'package:gzc_app/core/theme/spacing.dart';
 import 'package:gzc_app/core/utils/app_message.dart';
 import 'package:gzc_app/core/utils/devices.dart';
+import 'package:gzc_app/core/utils/permission.dart';
 import 'package:gzc_app/core/widgets/custom_card.dart';
 import 'package:gzc_app/core/widgets/custom_tabbar.dart';
+import 'package:gzc_app/core/widgets/scene_dialog.dart';
 import 'package:gzc_app/features/home/presentation/controllers/home_controller.dart';
 import 'package:gzc_app/features/home/presentation/widgets/home_shimmer.dart';
 
@@ -27,6 +30,24 @@ class _HomePageContentState extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
     fnParams = _calculateFnParams();
+  }
+
+  void handleFn(String route) async {
+    if (route == AppRoutes.takingPictures) {
+      bool hasPermission = await requestCameraPermission(requestStorage: false); // 根据需要决定是否请求存储权限
+      if (hasPermission) {
+        AppRouter.pushNamed(route);
+      }else {
+        if (!mounted) return;
+        showPermissionDeniedDialog(
+          context,
+          title: "权限不足",
+          content: "此应用需要相机权限才能拍照。请前往设置页面手动开启权限。"
+        );
+      }
+    }else {
+      AppRouter.pushNamed(route);
+    }
   }
 
   // 计算功能图标区参数
@@ -167,7 +188,8 @@ class _HomePageContentState extends ConsumerState<HomePage> {
                   if (item.route == "none") {
                     AppMessage.info("未开放");
                   }else {
-                    AppRouter.pushNamed(item.route);
+                    // AppRouter.pushNamed(item.route);
+                    handleFn(item.route);
                   }
                 },
                 child: Container(

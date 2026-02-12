@@ -18,13 +18,7 @@ class AuthRepositoryImpl implements AuthRespository {
   @override
   Future<User> loginWithPassword({required String phone, required String password}) async {
     final user = await remoteDataSource.loginWithPassword(phone, password);
-
-    final token = user.orgName;
-
-    await localStorage.setString('auth_token', token);
-    // await localStorage.setString('user', jsonEncode(user.toJson())); // UserModel 需要 toJson()
-
-    return user;
+    return user.toEntity();
   }
   
   @override
@@ -34,21 +28,17 @@ class AuthRepositoryImpl implements AuthRespository {
   }
   
   @override
-  Future<User> loginWithSmsCode({required String phone, required String code}) {
-    // TODO: implement loginWithSmsCode
-    throw UnimplementedError();
+  Future<User> loginWithSmsCode({required String phone, required String code}) async {
+    final user = await remoteDataSource.loginWithSmsCode(phone, code);
+
+    // TODO: 处理token信息
+
+    return user.toEntity();
   }
 
 
   @override
   void logout() {
     // TODO: implement logout
-  }
-
-// 👇 提取公共存储逻辑
-  Future<void> saveAuthData(User user) async {
-    // final token = user.orgName; // 或从其他字段获取
-    // await secureStorage.write(StorageKeys.authToken, token);
-    // await localStorage.setString(StorageKeys.user, jsonEncode(user.toJson()));
   }
 }

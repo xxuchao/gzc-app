@@ -26,14 +26,6 @@ class MainApp extends StatelessWidget {
       designSize: const Size(390, 844), // const Size(375, 812)
       minTextAdapt: true,
       splitScreenMode: true,
-      // builder: (context, child) {
-      //   return MaterialApp.router(
-      //     title: '云尚公证处',
-      //     theme: appLightTheme,
-      //     debugShowCheckedModeBanner: true,
-      //     routerConfig: AppRouter.router,
-      //   );
-      // },
       builder: (context, child) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle(

@@ -28,7 +28,7 @@ class _BootstrapPageState extends State<BootstrapPage> {
     await Future.delayed(const Duration(milliseconds: 500));
     if (!mounted) return;
 
-    if ((token ?? "").isNotEmpty) {
+    if ((token ?? "").isEmpty) {
       context.go(AppRoutes.home);
     } else {
       final targetRoute = AppRoutes.loginWithSms;

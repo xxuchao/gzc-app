@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gzc_app/core/constants/app_base.dart';
 import 'package:gzc_app/core/constants/routes.dart';
@@ -17,14 +18,14 @@ import 'package:gzc_app/features/auth/presentation/widgets/countdown_code_btn.da
 import '../widgets/phone_text_field.dart' show PhoneTextField;
 import '../widgets/protocol.dart' show ProtocolAgreement;
 
-class LoginWithSmsPage extends StatefulWidget {
+class LoginWithSmsPage extends ConsumerStatefulWidget {
   const LoginWithSmsPage({super.key});
 
   @override
-  State<LoginWithSmsPage> createState() => _LoginWithPasswordPageState();
+  ConsumerState<LoginWithSmsPage> createState() => _LoginWithPasswordPageState();
 }
 
-class _LoginWithPasswordPageState extends State<LoginWithSmsPage> {
+class _LoginWithPasswordPageState extends ConsumerState<LoginWithSmsPage> {
   final _formKey = GlobalKey<FormState>();
   final _phoneKey = GlobalKey<FormFieldState>();
   final _phoneController = TextEditingController();
@@ -41,27 +42,16 @@ class _LoginWithPasswordPageState extends State<LoginWithSmsPage> {
 
   // 登录
   Future<void> _onLoginPressed() async {
-    await Future.delayed(const Duration(seconds: 2));
     if (_formKey.currentState!.validate()) {
       final phone = _phoneController.text;
       final code = _codeController.text;
-      AppMessage.success("登陆中");
       print("$phone $code");
-    }else {
-      print("校验失败");
-      throw Exception("校验失败");
     }
   }
 
   // 获取验证码
   Future<void> _onCodePresssed() async {
-    await Future.delayed(const Duration(seconds: 2));
-    if (_phoneKey.currentState!.validate()) {
-      AppMessage.success("验证码已发送");
-    } else {
-      print("校验失败");
-      throw Exception("校验失败");
-    }
+    AppMessage.info("暂未开放");
   }
 
   @override

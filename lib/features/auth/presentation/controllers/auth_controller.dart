@@ -1,7 +1,7 @@
 // # GetX Controller (替代 BLoC/Cubit)
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/network/net_client.dart';
+import 'package:gzc_app/features/auth/domain/usecases/login_sms_usecase.dart';
 
 class AuthState {
   final bool isLoading;
@@ -43,7 +43,9 @@ final authProvider = NotifierProvider<AuthNotifier, AuthState>(
 );
 
 class AuthNotifier extends Notifier<AuthState> {
-  final NetClient _dioClient = NetClient();
+
+// 注入 UseCase
+  late final LoginSmsUsecase _loginSmsUsecase;
 
   @override
   AuthState build() {
@@ -55,27 +57,25 @@ class AuthNotifier extends Notifier<AuthState> {
     state = state.copyWith(isLoggedIn: false);
   }
 
-  Future<void> login(String username, String password) async {
+  Future<void> loginWithSms(String phone, String code) async {
     try {
       state = state.copyWith(isLoading: true, errorMessage: '');
-
-      await Future.delayed(const Duration(seconds: 1));
-
-      if (username == 'admin' && password == 'password') {
-        state = state.copyWith(
-          userInfo: const {
-            'id': '1',
-            'name': '张三',
-            'username': 'admin',
-            'avatar': 'https://via.placeholder.com/100',
-          },
-          isLoggedIn: true,
-        );
-      } else {
-        throw Exception('用户名或密码错误');
-      }
+      
+      final user = await _loginSmsUsecase(phone, code); // 调用 UseCase
+      
+      state = state.copyWith(
+        userInfo: {
+          'id': user.id,
+          'name': user.name,
+          'email': user.email,
+          'avatar': user.avatar,
+          'orgName': user.orgName,
+          'certification': user.certification,
+        },
+        isLoggedIn: true,
+      );
     } catch (e) {
-      state = state.copyWith(errorMessage: '登录失败: ${e.toString()}');
+      state = state.copyWith(errorMessage: e.toString());
     } finally {
       state = state.copyWith(isLoading: false);
     }

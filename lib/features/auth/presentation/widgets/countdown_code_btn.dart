@@ -104,17 +104,18 @@ class _CountdownCodeButtonState extends State<CountdownCodeButton> {
         onPressed: isDisabled
             ? null
             : () async {
-                setState(() => _isLoading = true);
-                try {
-                  await widget.onPressed();
-                  // 成功后启动倒计时
-                  _startCountdown();
-                  setState(() => _isLoading = false);
-                } catch (e) {
-                  // 失败：立即恢复按钮
-                  widget.onFailure?.call();
-                  reset();
-                }
+                widget.onPressed();
+                // setState(() => _isLoading = true);
+                // try {
+                //   await widget.onPressed();
+                //   // 成功后启动倒计时
+                //   _startCountdown();
+                //   setState(() => _isLoading = false);
+                // } catch (e) {
+                //   // 失败：立即恢复按钮
+                //   widget.onFailure?.call();
+                //   reset();
+                // }
               },
         style:
             widget.style ??
